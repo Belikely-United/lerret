@@ -144,9 +144,9 @@ describe('Happy path — paths inside .lerret/', () => {
         expect(fs.writeFile).toHaveBeenCalledTimes(1);
     });
 
-    it('row 4: write to .lerret/_design-system.md (FR53 reserved file)', async () => {
+    it('row 4: write to .lerret/_DESIGN.md (FR53 reserved file)', async () => {
         const { sandbox, fs } = makeSandbox();
-        await sandbox.writeFile('.lerret/_design-system.md', '# brand');
+        await sandbox.writeFile('.lerret/_DESIGN.md', '# brand');
         expect(fs.writeFile).toHaveBeenCalledTimes(1);
     });
 
@@ -539,12 +539,12 @@ describe('listDir — validated, non-mutating discovery', () => {
         fs.readDir.mockResolvedValue([
             { name: 'social', path: `${PROJECT_ROOT}/.lerret/social`, kind: 'directory', isFile: false, isDirectory: true },
             { name: 'banner.jsx', path: `${PROJECT_ROOT}/.lerret/banner.jsx`, kind: 'file', isFile: true, isDirectory: false, size: 412 },
-            { name: '_design-system.md', path: `${PROJECT_ROOT}/.lerret/_design-system.md`, kind: 'file', isFile: true, isDirectory: false },
+            { name: '_DESIGN.md', path: `${PROJECT_ROOT}/.lerret/_DESIGN.md`, kind: 'file', isFile: true, isDirectory: false },
         ]);
         const entries = await sandbox.listDir('.lerret/');
         expect(fs.readDir).toHaveBeenCalledWith(`${PROJECT_ROOT}/.lerret`);
         expect(entries).toEqual([
-            { name: '_design-system.md', kind: 'file' },
+            { name: '_DESIGN.md', kind: 'file' },
             { name: 'banner.jsx', kind: 'file', size: 412 },
             { name: 'social', kind: 'dir' },
         ]);

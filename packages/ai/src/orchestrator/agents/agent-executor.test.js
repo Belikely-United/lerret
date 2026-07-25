@@ -177,7 +177,7 @@ describe('buildLoopSystemPrompt', () => {
         for (const fragment of [
             'export const meta = { dimensions',
             'inline style objects only',
-            '_design-system.md',
+            '_DESIGN.md',
             'Never write .html files',
             'propsSchema',
             '.data.json',
@@ -457,7 +457,7 @@ describe('buildExecutors — Worker-backed mutations, sandbox reads', () => {
         const root = await executors.delete_dir({ path: '.lerret/' });
         expect(root.isError).toBe(true);
         // Protected files + the snapshot sidecar — refused BEFORE any fs touch.
-        for (const p of ['_design-system.md', '_context.md', 'config.json', '.state', '.state/history']) {
+        for (const p of ['_DESIGN.md', '_context.md', 'config.json', '.state', '.state/history']) {
             const out = await executors.delete_dir({ path: p });
             expect(out.isError, p).toBe(true);
             expect(out.content, p).toMatch(/protected project file or the snapshot store/);
@@ -517,7 +517,7 @@ describe('collectTreeForRemoval', () => {
 
 describe('isProtectedDirTarget', () => {
     it('flags the protected project files and the whole .state sidecar', () => {
-        expect(isProtectedDirTarget('.lerret/_design-system.md')).toBe(true);
+        expect(isProtectedDirTarget('.lerret/_DESIGN.md')).toBe(true);
         expect(isProtectedDirTarget('.lerret/_context.md')).toBe(true);
         expect(isProtectedDirTarget('.lerret/config.json')).toBe(true);
         expect(isProtectedDirTarget('.lerret/.state')).toBe(true);

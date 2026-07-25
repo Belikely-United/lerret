@@ -293,7 +293,7 @@ describe('recognizeWorkflow — selection chip as the W3 reference (scopePath)',
   });
 
   it('non-.jsx selections do not qualify as a reference', () => {
-    expect(recognizeWorkflow('make 3 variants of this', { scopePath: '_design-system.md' }).kind).toBe(
+    expect(recognizeWorkflow('make 3 variants of this', { scopePath: '_DESIGN.md' }).kind).toBe(
       'generic',
     );
   });

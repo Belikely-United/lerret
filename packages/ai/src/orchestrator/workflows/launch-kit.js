@@ -22,7 +22,7 @@
 // Brand anchoring (AC-3) is the DS Curator's authority chain, never a
 // hard-coded constant:
 //   primary   — `brandTokens` (the DSCurator node's state slot: parsed
-//               `_design-system.md` tokens, lowercased keys),
+//               `_DESIGN.md` tokens, lowercased keys),
 //   secondary — the target preset page's `config.json` `vars` (read here,
 //               graceful absence),
 //   absent    — the data key is OMITTED (never a raw placeholder default);
@@ -287,7 +287,7 @@ async function readPageVars(fs, pageRel) {
 
 /**
  * Resolve the brand-anchored data values for one asset (AC-3): for each
- * well-known brand data key, `_design-system.md` tokens win (canonical
+ * well-known brand data key, `_DESIGN.md` tokens win (canonical
  * match), preset `vars` fill the gaps, and an unresolved key is OMITTED —
  * never a raw placeholder.
  *

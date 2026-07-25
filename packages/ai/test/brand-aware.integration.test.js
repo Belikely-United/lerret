@@ -7,7 +7,7 @@
 //
 // Four assertions per Task 9:
 //   1. Brand context reaches the provider (the assembled prompt fragment
-//      carries content from _design-system.md, _context.md, _memory.md).
+//      carries content from _DESIGN.md, _context.md, _memory.md).
 //   2. Scoped anchoring: a social-media turn includes the `<!-- scope:
 //      social-media/ -->` section; an unrelated-scope turn excludes it.
 //   3. Conflict path fires: an in-memory `vars.brandColor: "#FF0000"` overlay
@@ -130,7 +130,7 @@ describe('AC-6.1 — brand context reaches the provider', () => {
     expect(sentinel.length).toBeGreaterThan(40); // a real prose line, not a heading
     expect(systemMessage).toContain(sentinel);
 
-    // _design-system.md (the canonical brand color).
+    // _DESIGN.md (the canonical brand color).
     expect(systemMessage).toContain('#B85B33');
     // _memory.md (a past-decision phrase).
     expect(systemMessage).toContain('brand orange');

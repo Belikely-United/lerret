@@ -18,7 +18,7 @@ import {
 } from './memory.js';
 import { DESIGN_SYSTEM_PATH, CONTEXT_PATH, MEMORY_PATH } from '../../memory/paths.js';
 
-const DS = '.lerret/_design-system.md';
+const DS = '.lerret/_DESIGN.md';
 const CTX = '.lerret/_context.md';
 const MEM = '.lerret/_memory.md';
 

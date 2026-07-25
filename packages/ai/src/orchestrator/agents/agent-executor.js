@@ -99,7 +99,7 @@ export function buildLoopSystemPrompt(state, scopedFile = null) {
         ? `\n\nThe user has SELECTED this asset; the request applies to it. Edit it by ` +
           `writing the COMPLETE updated file at exactly this path. ` +
           `This selection takes precedence over every project-wide rule — including the ` +
-          `_design-system.md rewrite — UNLESS the request explicitly says it applies to ` +
+          `_DESIGN.md rewrite — UNLESS the request explicitly says it applies to ` +
           `all assets / everything / the whole project.${pinpoint}\n` +
           `--- ${scopedFile.path} (current content) ---\n${scopedFile.content}\n--- end ---`
         : '';
@@ -193,12 +193,19 @@ export function buildLoopSystemPrompt(state, scopedFile = null) {
         'no imports of any kind; no <html>/<head>/<body>; the root <div> fills the full ' +
         'meta dimensions. Never ' +
         'write .html files. Markdown (.md) is allowed only when the user asks for notes/docs ' +
-        '— with ONE exception: .lerret/_design-system.md is the project\'s brand authority ' +
-        '(the colors/typography/voice tokens every asset reads). ONLY when no asset is ' +
+        '— with ONE exception: .lerret/_DESIGN.md is the project\'s brand authority, in ' +
+        'Google\'s DESIGN.md format: YAML front matter (--- delimited) holding name, ' +
+        'colors (flat "name: value" pairs — pair each background with an on-<name> text ' +
+        'color), typography (one block per level with fontFamily/fontSize/fontWeight/' +
+        'lineHeight/letterSpacing), spacing and rounded scales; then ## sections of ' +
+        'guidance — Overview, Colors, Typography, Layout, Voice, Do\'s and Don\'ts. ' +
+        'Per-folder rules live under <!-- scope: <folder>/ --> comments (closer scope ' +
+        'wins). Never duplicate a ## heading. ONLY when no asset is ' +
         'selected (no selected-asset block below) and the request asks for a PROJECT-WIDE ' +
-        'look change (change the brand color, switch the typography, retheme everything), ' +
-        'rewrite .lerret/_design-system.md in place with the COMPLETE updated content — ' +
-        'keep its existing structure and change only the values the request targets.' +
+        'look change (change the brand color, switch the typography, retheme everything): ' +
+        'if .lerret/_DESIGN.md EXISTS, rewrite it in place with the COMPLETE updated ' +
+        'content — keep its structure and change only the values the request targets; ' +
+        'if it does NOT exist, CREATE it in that format from what you know of the project.' +
         brand +
         context +
         currentPageBlock +
@@ -218,7 +225,7 @@ export function buildLoopSystemPrompt(state, scopedFile = null) {
  * @type {ReadonlySet<string>}
  */
 const PROTECTED_DIR_TARGETS = new Set([
-    '.lerret/_design-system.md',
+    '.lerret/_DESIGN.md',
     '.lerret/_context.md',
     '.lerret/config.json',
     '.lerret/.state',

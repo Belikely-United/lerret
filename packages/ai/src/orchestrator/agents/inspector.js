@@ -289,7 +289,7 @@ export function createInspectorNode({ sandbox, providerHandle, emit }) {
         // ── Selection scope (the dock chip) ─────────────────────────────────
         // The selected asset is folded in as first-class context so questions
         // are answered from ITS content and change-request redirects name IT —
-        // not a guessed target like _design-system.md (live user-testing
+        // not a guessed target like _DESIGN.md (live user-testing
         // finding, 2026-06-12). Same non-mutating read surface as above.
         const scoped = canRead ? await readScopedFile(state?.scope, sandbox) : null;
         if (scoped) emit(reading(scoped.path));

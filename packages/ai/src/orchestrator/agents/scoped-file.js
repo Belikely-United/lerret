@@ -9,7 +9,7 @@
 //     real file and change-request redirects name the SELECTED asset, not a
 //     guessed one (live user-testing finding, 2026-06-12 — a chip-scoped
 //     "change color to blue" in Inspect mode pointed the user at
-//     _design-system.md instead of their selection).
+//     _DESIGN.md instead of their selection).
 //
 // Reads go through the sandbox's NON-mutating surface only (exists +
 // readFile) — safe for the Inspector's structural read-only guarantee

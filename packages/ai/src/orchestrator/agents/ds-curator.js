@@ -1,32 +1,32 @@
 // DS Curator agent — owns brand-token authority.
 //
 // Authority order (architecture-epic-8.md §Multi-Agent Orchestrator + the
-// change-proposal open-question-#3 decision): `_design-system.md` is PRIMARY;
+// change-proposal open-question-#3 decision): `_DESIGN.md` is PRIMARY;
 // `config.json` `vars` is the SECONDARY, code-facing layer. When the two
 // DISAGREE on a token, the DS Curator surfaces a CLARIFYING NOTE to the user
-// but PROCEEDS with the `_design-system.md` value — it never auto-reconciles,
+// but PROCEEDS with the `_DESIGN.md` value — it never auto-reconciles,
 // never blocks, never writes either file.
 //
 // ── Two surfaces, one authority rule ─────────────────────────────────────────
 //
 // `createDsCuratorNode({ sandbox, emit })` — the Story 8.3 LangGraph node.
-//   Returns `{ brandTokens }`. Its return contract + its conflict `clarifying-note`
-//   emit are UNCHANGED by Story 8.6. It now DELEGATES token parsing of
-//   `_design-system.md` to `../../memory/design-tokens.js` (the canonical
-//   `lerret-tokens` fenced block) while KEEPING the lenient `- name: value`
-//   line parser as a fallback so the existing node tests (which feed
-//   `- brand-orange: #ff6600`) still pass.
+//   Returns `{ brandTokens }` — a flat `token → value` map carrying BOTH bare
+//   names (`brand`) and dot paths (`colors.brand`). Token parsing is delegated
+//   entirely to `../../memory/design-tokens.js` (the `_DESIGN.md` front-matter
+//   parser); there is no second format and no lenient fallback. The node also
+//   emits a `clarifying-note` when the parser ignored something, so a
+//   malformed brand file can no longer degrade to prose-only in silence.
 //
 // `createDSCurator({ projectRoot, fs })` — the richer Story 8.6 surface:
 //   `resolveTokens({ prompt, targetScope, vars })` resolves brand-token
-//   references in a prompt, with `_design-system.md` PRIMARY and the cascaded
+//   references in a prompt, with `_DESIGN.md` PRIMARY and the cascaded
 //   `config.json` `vars` (passed IN via DI — guardrail #9) SECONDARY; it
 //   returns `{ resolved, conflicts }`. `toClarifyingNotes(conflicts)` turns
 //   conflicts into `ClarifyingNoteEvent`s for the orchestrator to splice into
 //   its `runTurn` stream.
 //
 // READ-ONLY invariant: this agent NEVER writes `config.json` or
-// `_design-system.md`. It has no sandbox/write surface — `createDSCurator`
+// `_DESIGN.md`. It has no sandbox/write surface — `createDSCurator`
 // takes only the unwrapped `fs` (reads). The no-direct-fs guard
 // (./worker-no-direct-fs.test.js) is satisfied: no `node:*` import, no
 // `fs.writeFile`/`fs.mkdir`/`fs.unlink`.
@@ -59,7 +59,7 @@ const PROJECT_CONFIG_PATH = '.lerret/config.json';
  * }} ClarifyingNoteEvent
  *   A one-line, calm/factual note that two brand-authority sources disagree on
  *   a token. The orchestrator surfaces `note` in the turn-outcome card (Story
- *   8.2) and PROCEEDS with `designSystemValue` (the `_design-system.md` value).
+ *   8.2) and PROCEEDS with `designSystemValue` (the `_DESIGN.md` value).
  *   `configToken` is the user's ACTUAL `config.json` var key when it differs
  *   from the design-system token name (e.g. token `brand` vs `brandColor`).
  */
@@ -165,48 +165,24 @@ function findSecondaryFor(secondaryVars, tokenName) {
 }
 
 /**
- * Lenient legacy line parser: `- name: value` or `name: value`. Retained as a
- * FALLBACK for the graph node so the Story 8.3 node tests (which feed loose
- * lines, not the canonical fenced block) still resolve. Null-proto map so a
- * token named `constructor`/`__proto__` is a real own key (no prototype
- * pollution).
+ * Parse `_DESIGN.md` into a flat `tokenName → value` record plus the parser's
+ * warnings. Delegates entirely to `design-tokens.js` (the front-matter parser)
+ * — there is no second format and no lenient fallback. Keys are lowercased for
+ * case-insensitive resolution; both bare names (`brand`) and dot paths
+ * (`colors.brand`) are present, so `matchTokenReferences` resolves a
+ * `{colors.brand}` mention with no extra matching logic (its whole-word regex
+ * already spans the dotted name). Null-proto so a token named
+ * `constructor`/`__proto__` is a real own key (no prototype pollution).
  *
  * @param {string} md
- * @returns {Record<string, string>}
- */
-function parseLooseLines(md) {
-  /** @type {Record<string, string>} */
-  const tokens = Object.create(null);
-  for (const raw of String(md ?? '').split('\n')) {
-    const line = raw.replace(/^\s*[-*]\s*/, '').trim();
-    const m = /^([A-Za-z][\w-]*)\s*:\s*(#[0-9a-fA-F]{3,8}|[^\s].*)$/.exec(line);
-    if (m) tokens[m[1].toLowerCase()] = m[2].trim();
-  }
-  return tokens;
-}
-
-/**
- * Parse `_design-system.md` into a flat `tokenName → value` record. Prefers the
- * canonical `lerret-tokens` fenced block (design-tokens.js); if that yields
- * nothing, falls back to the loose `- name: value` line scan. The precedence
- * is EXCLUSIVE: when the canonical block yields at least one token, loose
- * `name: value` lines OUTSIDE the fence are ignored entirely (block present →
- * block only; no block → loose-line fallback). Keys are lowercased for
- * case-insensitive resolution. Null-proto.
- *
- * @param {string} md
- * @returns {Record<string, string>}
+ * @returns {{ tokens: Record<string, string>, warnings: string[] }}
  */
 function parseDesignSystemTokens(md) {
   /** @type {Record<string, string>} */
-  const out = Object.create(null);
-  const flat = flattenTokens(parseDesignTokens(md));
-  for (const [k, v] of flat) out[k.toLowerCase()] = v;
-  if (Object.keys(out).length === 0) {
-    const loose = parseLooseLines(md);
-    for (const k of Object.keys(loose)) out[k] = loose[k];
-  }
-  return out;
+  const tokens = Object.create(null);
+  const parsed = parseDesignTokens(md);
+  for (const [k, v] of flattenTokens(parsed)) tokens[k.toLowerCase()] = v;
+  return { tokens, warnings: parsed.warnings };
 }
 
 // ---------------------------------------------------------------------------
@@ -280,21 +256,21 @@ export function createDSCurator({ projectRoot, fs }) {
     throw new TypeError('createDSCurator: fs must expose readFile (reads only)');
   }
 
-  /** Read + parse `_design-system.md` (primary). Graceful absence → {}. */
+  /** Read + parse `_DESIGN.md` (primary). Graceful absence → {}. */
   async function readDesignSystemTokens() {
     try {
       const raw = await fs.readFile(absoluteOf(projectRoot, DESIGN_SYSTEM_PATH), {
         encoding: 'utf-8',
       });
       const md = typeof raw === 'string' ? raw : new TextDecoder().decode(raw);
-      return parseDesignSystemTokens(md);
+      return parseDesignSystemTokens(md).tokens;
     } catch {
       return Object.create(null);
     }
   }
 
   /**
-   * Resolve the brand-token references a prompt makes. `_design-system.md`
+   * Resolve the brand-token references a prompt makes. `_DESIGN.md`
    * wins; the cascaded `config.json` `vars` (passed IN via `vars`, DI per
    * guardrail #9) fills tokens the design system lacks. Cross-source matching
    * is CANONICAL (`canonToken`): the design system's `brand` and the real
@@ -396,8 +372,8 @@ export function toClarifyingNotes(conflicts) {
     return {
       type: 'clarifying-note',
       note:
-        `\`_design-system.md\` and ${where} disagree on ${keyName} — ` +
-        `using \`${c.designSystemValue}\` from \`_design-system.md\` ` +
+        `\`_DESIGN.md\` and ${where} disagree on ${keyName} — ` +
+        `using \`${c.designSystemValue}\` from \`_DESIGN.md\` ` +
         `(config.json says \`${c.configValue}\`).`,
       token: c.token,
       ...(c.configToken ? { configToken: c.configToken } : {}),
@@ -413,12 +389,12 @@ export function toClarifyingNotes(conflicts) {
 // ---------------------------------------------------------------------------
 
 /**
- * Create the DS Curator graph node. Reads `_design-system.md` (primary) and the
+ * Create the DS Curator graph node. Reads `_DESIGN.md` (primary) and the
  * project `config.json` `vars` (secondary) via the sandbox; records the
  * resolved token map in the `brandTokens` state slot and emits a `clarifying-note`
  * conflict note for any token the two sources disagree on.
  *
- * Story 8.6 rewires token parsing of `_design-system.md` to delegate to
+ * Story 8.6 rewires token parsing of `_DESIGN.md` to delegate to
  * design-tokens.js (canonical fenced block) with the loose-line fallback, so
  * the node now understands BOTH the canonical token format AND the loose lines
  * the Story 8.3 tests feed. The `{ brandTokens }` RETURN CONTRACT and the
@@ -440,7 +416,14 @@ export function createDsCuratorNode({ sandbox, emit }) {
       if (await sandbox.exists(DESIGN_SYSTEM_PATH)) {
         const raw = await sandbox.readFile(DESIGN_SYSTEM_PATH, { encoding: 'utf-8' });
         const md = typeof raw === 'string' ? raw : new TextDecoder().decode(raw);
-        primary = parseDesignSystemTokens(md);
+        const parsed = parseDesignSystemTokens(md);
+        primary = parsed.tokens;
+        // Surface what the parser ignored — one calm note, never a block. The
+        // old parser dropped unknown keys silently, so a malformed brand file
+        // degraded to prose-only with no signal at all.
+        if (parsed.warnings.length > 0) {
+          emit(clarifyingNote(parsed.warnings.join(' '), { warnings: parsed.warnings }));
+        }
       }
     } catch {
       // graceful absence
@@ -468,7 +451,7 @@ export function createDsCuratorNode({ sandbox, emit }) {
       if (!primaryByCanon.has(c)) primaryByCanon.set(c, k);
     }
 
-    // Resolve with `_design-system.md` PRIMARY; config vars fill the gaps.
+    // Resolve with `_DESIGN.md` PRIMARY; config vars fill the gaps.
     // A secondary var whose CANONICAL form collides with a primary token is
     // EXCLUDED from brandTokens (primary wins — the merge must not carry both
     // `brand: #B85B33` and a contradicting `brandcolor: #FF0000`). When the
@@ -486,8 +469,8 @@ export function createDsCuratorNode({ sandbox, emit }) {
           // the pill folds into write-progress). Proceed with primary.
           emit(
             clarifyingNote(
-              `brand-token conflict on '${primaryKey}': _design-system.md says '${primary[primaryKey]}', ` +
-                `config.json vars${viaKey} says '${sv.value}' — using _design-system.md (primary)`,
+              `brand-token conflict on '${primaryKey}': _DESIGN.md says '${primary[primaryKey]}', ` +
+                `config.json vars${viaKey} says '${sv.value}' — using _DESIGN.md (primary)`,
               {
                 token: primaryKey,
                 designSystemValue: primary[primaryKey],

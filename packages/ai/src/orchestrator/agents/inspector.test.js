@@ -150,7 +150,7 @@ describe('createInspectorNode — answer path', () => {
 
     it('folds the SELECTED asset into the prompt and pins redirects to it (scope-aware Inspector)', async () => {
         // A chip-scoped "change color to blue" in Inspect mode pointed the
-        // user at _design-system.md instead of their selection — the
+        // user at _DESIGN.md instead of their selection — the
         // Inspector was scope-blind (live user-testing finding, 2026-06-12).
         const providerHandle = makeHandle();
         const emit = vi.fn();

@@ -1,7 +1,7 @@
 // @vitest-environment node
 //
 // Unit tests for the DS Curator node — brand-token authority. Pins:
-//   - `_design-system.md` is PRIMARY; `config.json` `vars` is SECONDARY,
+//   - `_DESIGN.md` is PRIMARY; `config.json` `vars` is SECONDARY,
 //   - a token both sources define DIFFERENTLY emits a conflict tool-call note
 //     and resolves to the primary value (never auto-reconciles),
 //   - secondary fills gaps the primary leaves,
@@ -19,7 +19,12 @@ import {
 } from './ds-curator.js';
 import { DESIGN_SYSTEM_PATH } from '../../memory/paths.js';
 
-const DS_PATH = '.lerret/_design-system.md';
+const DS_PATH = '.lerret/_DESIGN.md';
+
+/** Build a minimal `_DESIGN.md` (front matter only) with the given colors. */
+function ds(colors) {
+  return ['---', 'colors:', ...Object.entries(colors).map((e) => `  ${e[0]}: "${e[1]}"`), '---'].join('\n');
+}
 const CFG_PATH = '.lerret/config.json';
 
 /**
@@ -44,7 +49,7 @@ describe('createDsCuratorNode — authority order', () => {
   it('design-system PRIMARY wins on conflict and emits a conflict note', async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '- brand-orange: #ff6600',
+      [DS_PATH]: ds({ 'brand-orange': '#ff6600' }),
       [CFG_PATH]: JSON.stringify({ vars: { 'brand-orange': '#ff0000' } }),
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
@@ -52,13 +57,13 @@ describe('createDsCuratorNode — authority order', () => {
     const note = emit.mock.calls.map((c) => c[0]).find((e) => e.type === 'clarifying-note');
     expect(note).toBeDefined();
     expect(note.note).toMatch(/brand-token conflict on 'brand-orange'/);
-    expect(note.note).toMatch(/using _design-system\.md \(primary\)/);
+    expect(note.note).toMatch(/using _DESIGN.md \(primary\)/);
   });
 
   it('secondary (config vars) fills tokens the primary does not define; no spurious note', async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '- brand-orange: #ff6600',
+      [DS_PATH]: ds({ 'brand-orange': '#ff6600' }),
       [CFG_PATH]: JSON.stringify({ vars: { radius: '8px' } }),
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
@@ -70,7 +75,7 @@ describe('createDsCuratorNode — authority order', () => {
   it('agreeing values do not emit a conflict note', async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '- brand-orange: #ff6600',
+      [DS_PATH]: ds({ 'brand-orange': '#ff6600' }),
       [CFG_PATH]: JSON.stringify({ vars: { 'brand-orange': '#ff6600' } }),
     });
     await createDsCuratorNode({ sandbox, emit })({});
@@ -80,7 +85,7 @@ describe('createDsCuratorNode — authority order', () => {
   it("real-vocabulary conflict: DS 'brand' vs vars 'brandColor' fires, names the config key, and DEDUPES brandTokens", async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '```lerret-tokens\ncolors:\n  brand: "#B85B33"\n```',
+      [DS_PATH]: ds({ brand: '#B85B33' }),
       [CFG_PATH]: JSON.stringify({ vars: { brandColor: '#FF0000', radius: '8px' } }),
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
@@ -94,24 +99,24 @@ describe('createDsCuratorNode — authority order', () => {
     expect(note.note).toMatch(/brand-token conflict on 'brand'/);
     expect(note.note).toContain("brandColor"); // the user's ACTUAL var key
     expect(note.note).toContain('#FF0000');
-    expect(note.note).toMatch(/using _design-system\.md \(primary\)/);
+    expect(note.note).toMatch(/using _DESIGN.md \(primary\)/);
   });
 
   it('a canonically-colliding var that AGREES is excluded from brandTokens without a note', async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '```lerret-tokens\ncolors:\n  brand: "#B85B33"\n```',
+      [DS_PATH]: ds({ brand: '#B85B33' }),
       [CFG_PATH]: JSON.stringify({ vars: { brandColor: '#B85B33' } }),
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
-    expect(out.brandTokens).toEqual({ brand: '#B85B33' });
+    expect(out.brandTokens).toMatchObject({ brand: '#B85B33' });
     expect(emit.mock.calls.some((c) => c[0]?.type === 'clarifying-note')).toBe(false);
   });
 
   it('case-different same hex values are NOT a conflict (normalized compare)', async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '- brand-orange: #ff6600',
+      [DS_PATH]: ds({ 'brand-orange': '#ff6600' }),
       [CFG_PATH]: JSON.stringify({ vars: { 'brand-orange': '#FF6600' } }),
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
@@ -152,15 +157,15 @@ describe('createDsCuratorNode — graceful absence + robustness', () => {
   it('malformed config.json is swallowed; primary still resolves', async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '- brand-orange: #ff6600',
+      [DS_PATH]: ds({ 'brand-orange': '#ff6600' }),
       [CFG_PATH]: '{ this is : not json',
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
-    expect(out.brandTokens).toEqual({ 'brand-orange': '#ff6600' });
+    expect(out.brandTokens).toMatchObject({ 'brand-orange': '#ff6600' });
   });
 
   it('aborted signal short-circuits to empty brandTokens without reading', async () => {
-    const sandbox = makeSandbox({ [DS_PATH]: '- x: #fff' });
+    const sandbox = makeSandbox({ [DS_PATH]: ds({ x: '#fff' }) });
     const controller = new AbortController();
     controller.abort();
     const out = await createDsCuratorNode({ sandbox, emit: vi.fn() })({
@@ -175,7 +180,7 @@ describe('createDsCuratorNode — prototype-pollution safety', () => {
   it("a token named 'constructor' is captured as data, conflicts correctly, and never pollutes", async () => {
     const emit = vi.fn();
     const sandbox = makeSandbox({
-      [DS_PATH]: '- constructor: #fff',
+      [DS_PATH]: ds({ constructor: '#fff' }),
       [CFG_PATH]: JSON.stringify({ vars: { constructor: '#000' } }),
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
@@ -194,14 +199,18 @@ describe('createDsCuratorNode — prototype-pollution safety', () => {
 const ROOT = '/proj';
 
 const CANONICAL_DS = [
-  '## Brand tokens',
-  '```lerret-tokens',
+  '---',
+  'name: Acme',
   'colors:',
   '  brand: "#B85B33"',
   '  accent: "#F1EDE5"',
-  'fonts:',
-  '  display: "Geist"',
-  '```',
+  'typography:',
+  '  display:',
+  '    fontFamily: "Geist"',
+  '---',
+  '',
+  '## Overview',
+  'Calm and technical.',
 ].join('\n');
 
 /** Read-only `fs` over an absolute-path map; ENOENT on absence. */
@@ -237,7 +246,7 @@ describe('matchTokenReferences', () => {
 });
 
 describe('createDSCurator — resolveTokens (design-system PRIMARY)', () => {
-  it('resolves a referenced token from _design-system.md (primary), not config vars', async () => {
+  it('resolves a referenced token from _DESIGN.md (primary), not config vars', async () => {
     const fs = makeReadFs({ [`${ROOT}/${DESIGN_SYSTEM_PATH}`]: CANONICAL_DS });
     const curator = createDSCurator({ projectRoot: ROOT, fs });
     const { resolved } = await curator.resolveTokens({
@@ -265,7 +274,7 @@ describe('createDSCurator — resolveTokens (design-system PRIMARY)', () => {
     });
   });
 
-  it('a fresh project with no _design-system.md resolves purely from vars (graceful absence)', async () => {
+  it('a fresh project with no _DESIGN.md resolves purely from vars (graceful absence)', async () => {
     const curator = createDSCurator({ projectRoot: ROOT, fs: makeReadFs({}) });
     const { resolved, conflicts } = await curator.resolveTokens({
       prompt: 'the brand color',
@@ -341,7 +350,7 @@ describe('createDSCurator — conflict detection (AC-3)', () => {
   });
 
   it('a prompt referencing `brand` resolves a SECONDARY-ONLY `brandColor` var via canonical match', async () => {
-    // No _design-system.md at all — vars is the only source.
+    // No _DESIGN.md at all — vars is the only source.
     const curator = createDSCurator({ projectRoot: ROOT, fs: makeReadFs({}) });
     const { resolved, conflicts } = await curator.resolveTokens({
       prompt: 'paint it in our brand',
@@ -393,7 +402,7 @@ describe('toClarifyingNotes', () => {
     expect(notes[0].scope).toBe('social-media/');
     expect(notes[0].note).toContain('#B85B33');
     expect(notes[0].note).toContain('#FF0000'); // the overridden config value, in the copy
-    expect(notes[0].note).toContain('_design-system.md');
+    expect(notes[0].note).toContain('_DESIGN.md');
     // Calm voice: no exclamation marks.
     expect(notes[0].note).not.toContain('!');
   });
@@ -426,7 +435,7 @@ describe('createDSCurator — read-only invariant', () => {
   it('the agent surface exposes no write method and never receives a sandbox', () => {
     const fs = makeReadFs({});
     const curator = createDSCurator({ projectRoot: ROOT, fs });
-    // The DS Curator MUST NOT write config.json or _design-system.md.
+    // The DS Curator MUST NOT write config.json or _DESIGN.md.
     expect(curator.writeFile).toBeUndefined();
     expect(curator.deleteFile).toBeUndefined();
     expect(Object.keys(curator).sort()).toEqual(['resolveTokens', 'toClarifyingNotes']);

@@ -117,9 +117,12 @@ describe('createPlannerNode — decomposition', () => {
             prompt: 'change color to blue gradient',
         });
         const sys = providerHandle.complete.mock.calls[0][0].messages[0].content;
-        expect(sys).toMatch(/_design-system\.md is the project's brand authority/);
+        expect(sys).toMatch(/_DESIGN.md is the project's brand authority/);
         expect(sys).toMatch(/ONLY when no asset is selected/);
-        expect(sys).toMatch(/rewriting \.lerret\/_design-system\.md in place/);
+        expect(sys).toMatch(/write step for \.lerret\/_DESIGN\.md/);
+        // Creates the file when it is absent — the old prompt only ever said
+        // "keep its existing structure" of a file that was never scaffolded.
+        expect(sys).toMatch(/CREATING it in that format if it does not/);
         expect(sys).toMatch(/\{"steps":\[\],"note":/);
     });
 
@@ -282,7 +285,7 @@ describe('parsePlanResult', () => {
             steps: [
                 {
                     op: 'write',
-                    path: '.lerret/_design-system.md',
+                    path: '.lerret/_DESIGN.md',
                     content:
                         '# Design system\n\n```lerret-tokens\ncolors:\n  brand: "#1A4FA3"\n```\n\nBlue leads.\n',
                 },
@@ -290,7 +293,7 @@ describe('parsePlanResult', () => {
         });
         const r = parsePlanResult(content);
         expect(r.steps).toHaveLength(1);
-        expect(r.steps[0].path).toBe('.lerret/_design-system.md');
+        expect(r.steps[0].path).toBe('.lerret/_DESIGN.md');
         expect(r.steps[0].content).toContain('#1A4FA3');
     });
 

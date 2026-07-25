@@ -157,7 +157,7 @@ export function toolCall(name, meta = {}) {
  * A calm, factual note that two brand-authority sources disagree (the DS
  * Curator's conflict surface — architecture §Multi-Agent Orchestrator: the
  * note shows in the turn-outcome card; the turn PROCEEDS with the
- * `_design-system.md` value, never blocks). `note` is the finished user-facing
+ * `_DESIGN.md` value, never blocks). `note` is the finished user-facing
  * sentence; the structured fields ride along for richer future UI.
  *
  * @param {string} note

@@ -170,7 +170,7 @@ describe('planLaunchKit — missing-page creation (AC-2)', () => {
     });
     const data = parseStepJson(steps.find((s) => s.path.endsWith('.data.json')));
 
-    expect(data.default.brandColor).toBe('#B85B33'); // _design-system.md PRIMARY
+    expect(data.default.brandColor).toBe('#B85B33'); // _DESIGN.md PRIMARY
     expect(data.default.displayName).toBe('Lerret'); // vars SECONDARY fill
     expect(data.default.handle).toBe('@lerret');
     expect(data.default.tagline).toBe('Designs are just files.');

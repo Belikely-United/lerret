@@ -1750,7 +1750,7 @@ describe('selection chip — element pinpoint display + turn threading', () => {
 describe('clarifying-note pipeline (DS Curator conflict surface)', () => {
     it('captures clarifying-note events into the turn record and renders them in the thread card', async () => {
         const note =
-            "brand-token conflict on 'brand': _design-system.md says '#B85B33', config.json vars (as 'brandColor') says '#FF0000' — using _design-system.md (primary)";
+            "brand-token conflict on 'brand': _DESIGN.md says '#B85B33', config.json vars (as 'brandColor') says '#FF0000' — using _DESIGN.md (primary)";
         aiMock.current = makeAi({
             events: [
                 { type: 'thinking' },
@@ -2058,7 +2058,7 @@ describe('AiInputCluster — tool trail (Story 9.4 AC-4)', () => {
         aiMock.current = makeAi({
             events: [
                 { type: 'thinking' },
-                { type: 'reading', file: '_design-system.md' }, // Memory context read — pill only
+                { type: 'reading', file: '_DESIGN.md' }, // Memory context read — pill only
                 { type: 'tool-call', name: 'list_dir' },
                 { type: 'reading', file: '.lerret/' },
                 { type: 'tool-call', name: 'read_file' },

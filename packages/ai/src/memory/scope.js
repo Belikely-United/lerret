@@ -1,6 +1,6 @@
 // Path-scoped anchoring parser (FR53) — PURE: no fs, no DOM, no `node:*`.
 //
-// A `_design-system.md` / `_context.md` / `_memory.md` body can carry both
+// A `_DESIGN.md` / `_context.md` / `_memory.md` body can carry both
 // project-wide ("global") rules AND per-folder rules. A per-folder section is
 // opened by an HTML comment of the form:
 //

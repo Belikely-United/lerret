@@ -71,12 +71,47 @@ This is what makes it an asset *factory* rather than a generic chat box. Tell Le
 
 | File | Holds |
 |---|---|
-| `_design-system.md` | Colors, type, spacing, tokens — *"our orange"* resolves from here |
+| `_DESIGN.md` | Brand authority — color, typography, spacing and radius tokens, plus voice rules and per-folder overrides. *"our orange"* resolves from here |
 | `_context.md` | What you're building, audience, voice |
 | `_memory.md` | Durable notes the agent should remember |
 | `_brand/` | A folder for logos, swatches, reference images |
 
-Because these are real files — git-tracked, editable in your own editor — they're never opaque AI state. From there the agent generates **platform-specific assets** using Lerret's themed presets and data-file expansion: one component plus a `.data.json` becomes many artboards at once — a launch kit, a set of social variants — all on-brand, all in a single turn. (See [variants and data files](/concepts/) for the underlying mechanic.)
+Because these are real files — git-tracked, editable in your own editor — they're never opaque AI state.
+
+### Bring your own DESIGN.md
+
+`_DESIGN.md` is a **superset of [Google's open DESIGN.md format](https://github.com/google-labs-code/design.md)**: YAML front matter holding the tokens, then `##` sections of guidance the agent reads.
+
+```markdown
+---
+name: Acme
+colors:
+  brand: "#B85B33"
+  on-brand: "#FFFFFF"
+typography:
+  display:
+    fontFamily: Geist
+    fontSize: 72px
+    fontWeight: "700"
+    lineHeight: 76px
+spacing:
+  unit: 8px
+rounded:
+  DEFAULT: 12px
+---
+
+## Overview
+Calm and technical. Considered, never loud.
+
+## Voice
+- Calm, factual. No hype, no exclamation marks.
+
+<!-- scope: social/ -->
+## Social overrides
+- One idea per post. Lead with the verb.
+```
+
+Already have a `DESIGN.md`? Copy it to `.lerret/_DESIGN.md` — Lerret reads the same format. Two things are Lerret's own additions, both of which the spec permits: a `## Voice` section for copy rules, and `<!-- scope: <folder>/ -->` comments that scope rules to a folder (closer scope wins). From there the agent generates **platform-specific assets** using Lerret's themed presets and data-file expansion: one component plus a `.data.json` becomes many artboards at once — a launch kit, a set of social variants — all on-brand, all in a single turn. (See [variants and data files](/concepts/) for the underlying mechanic.)
 
 ## Local models with Ollama
 

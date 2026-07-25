@@ -10,7 +10,7 @@
 //
 // The chains under test:
 //   W2: recognizeWorkflow → REAL createDsCuratorNode (brandTokens from the
-//       fixture's _design-system.md) → planLaunchKit → WorkerStep[] →
+//       fixture's _DESIGN.md) → planLaunchKit → WorkerStep[] →
 //       REAL createWorker / REAL runTurn (mock resolver) → files land →
 //       core's loadAssetData discovers them (no special render path) →
 //       snapshot.revertTurn restores the pre-turn state (AC-10's backend).
@@ -147,7 +147,7 @@ describe('W2 launch kit — recognize → DS Curator → plan → REAL Worker', 
 
     // 2. Brand authority flows from the REAL fixture through the REAL node.
     const brandTokens = await resolveFixtureTokens(sandbox);
-    expect(brandTokens.brand).toBe('#B85B33'); // _design-system.md, not a constant
+    expect(brandTokens.brand).toBe('#B85B33'); // _DESIGN.md, not a constant
 
     // 3. The W2 decomposition: fixture has social-media/ (page root exists)
     //    but no twitter/ sub-page → full creation per platform.

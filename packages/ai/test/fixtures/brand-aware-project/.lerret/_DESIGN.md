@@ -1,22 +1,55 @@
+---
+name: Lerret
+description: Calm, factual, builder-to-builder.
+colors:
+  brand: "#B85B33"
+  on-brand: "#FFFFFF"
+  accent: "#F1EDE5"
+  neutralDark: "#1A1714"
+typography:
+  display:
+    fontFamily: Geist
+    fontSize: 72px
+    fontWeight: "700"
+    lineHeight: 76px
+    letterSpacing: -0.03em
+  body:
+    fontFamily: Geist
+    fontSize: 18px
+    fontWeight: "400"
+    lineHeight: 28px
+spacing:
+  unit: 8px
+  gutter: 48px
+rounded:
+  DEFAULT: 12px
+  full: 9999px
+---
+
 # Design System — Lerret (dogfood fixture)
 
 The canonical brand authority for this project. The AI reads this FIRST when
 resolving any brand-token reference ("our orange", "the brand font"). Values
 here WIN over `config.json` `vars`.
 
-## Brand tokens
+## Overview
 
-```lerret-tokens
-colors:
-  brand: "#B85B33"
-  accent: "#F1EDE5"
-  neutralDark: "#1A1714"
-fonts:
-  display: "Geist"
-  body: "Geist"
-```
+Calm and technical. The work should look considered, never loud.
 
-## Voice rules
+## Colors
+
+`{colors.brand}` carries the piece — let it breathe. Text on brand uses
+`{colors.on-brand}`.
+
+## Typography
+
+Display for one idea per asset; never more than two levels on a card.
+
+## Layout
+
+Everything lands on the `{spacing.unit}` grid.
+
+## Voice
 
 - Calm, factual, builder-to-builder. No hype, no exclamation marks.
 - Lowercase product nouns; never shout the brand name.

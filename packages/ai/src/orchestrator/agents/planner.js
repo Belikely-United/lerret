@@ -88,7 +88,7 @@ function buildPlanningMessages(state, imageBlocks = [], scopedFile = null) {
         ? `\n\nThe user has SELECTED this asset; the request applies to it. To edit it, ` +
           `emit ONE write step at exactly this path with the COMPLETE updated file. ` +
           `This selection takes precedence over every project-wide rule — including the ` +
-          `_design-system.md rewrite — UNLESS the request explicitly says it applies to ` +
+          `_DESIGN.md rewrite — UNLESS the request explicitly says it applies to ` +
           `all assets / everything / the whole project, in which case honor the request's ` +
           `explicit project-wide intent instead.${pinpoint}\n` +
           `--- ${scopedFile.path} (current content) ---\n${scopedFile.content}\n--- end ---`
@@ -136,14 +136,20 @@ function buildPlanningMessages(state, imageBlocks = [], scopedFile = null) {
                 'no imports of any kind; no <html>/<head>/<body>; the root <div> fills the full ' +
                 'meta dimensions. Never ' +
                 'write .html files. Markdown (.md) is allowed only when the user asks for notes/docs ' +
-                '— with ONE exception: .lerret/_design-system.md is the project\'s brand authority ' +
-                '(the colors/typography/voice tokens every asset reads; when present, its text ' +
-                'appears in the project context below). ONLY when no asset is selected (no ' +
+                '— with ONE exception: .lerret/_DESIGN.md is the project\'s brand authority, in ' +
+                'Google\'s DESIGN.md format: YAML front matter (--- delimited) holding name, ' +
+                'colors (flat "name: value" pairs — pair each background with an on-<name> text ' +
+                'color), typography (one block per level with fontFamily/fontSize/fontWeight/' +
+                'lineHeight/letterSpacing), spacing and rounded scales; then ## sections of ' +
+                'guidance — Overview, Colors, Typography, Layout, Voice, Do\'s and Don\'ts. ' +
+                'Per-folder rules live under <!-- scope: <folder>/ --> comments (closer scope ' +
+                'wins). Never duplicate a ## heading. When present, its text appears in the ' +
+                'project context below. ONLY when no asset is selected (no ' +
                 'selected-asset block below) and the request asks for a PROJECT-WIDE look change ' +
                 '(change the brand color, switch the typography, retheme everything), emit ONE ' +
-                'write step rewriting .lerret/_design-system.md in place with the COMPLETE updated ' +
-                'content — keep its existing structure and change only the values the request ' +
-                'targets.\n' +
+                'write step for .lerret/_DESIGN.md with the COMPLETE content — rewriting it in ' +
+                'place if it exists (keep its structure, change only what the request targets), ' +
+                'or CREATING it in that format if it does not.\n' +
                 'If you cannot produce a correct plan (for example the request targets one ' +
                 'specific asset whose content you cannot see), respond ' +
                 '{"steps":[],"note":"<one short sentence telling the user what to do — e.g. ' +

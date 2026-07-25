@@ -19,8 +19,13 @@
 // re-derives those from these constants to eliminate the duplication without
 // changing any value.
 
-/** @type {'.lerret/_design-system.md'} The primary brand authority file. */
-export const DESIGN_SYSTEM_PATH = '.lerret/_design-system.md';
+/**
+ * @type {'.lerret/_DESIGN.md'} The primary brand authority file — Google Labs'
+ * open DESIGN.md format (YAML front-matter tokens + `##` guidance sections),
+ * extended with Lerret's `## Voice` section and `<!-- scope: -->` overrides.
+ * The `_` prefix keeps it out of the page tree (FR5 reserved-name rule).
+ */
+export const DESIGN_SYSTEM_PATH = '.lerret/_DESIGN.md';
 
 /** @type {'.lerret/_context.md'} Product / audience / tone context. */
 export const CONTEXT_PATH = '.lerret/_context.md';
