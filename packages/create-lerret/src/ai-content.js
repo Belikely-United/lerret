@@ -47,13 +47,13 @@ export const CLI = {
 export const SECTIONS = {
   // Short skill description used in Claude's YAML frontmatter (one line).
   claudeSkillDescription:
-    'Author and edit visual assets inside a Lerret project. Use whenever you create, modify, or refactor a `.jsx`/`.tsx` file under a `.lerret/` directory, change `config.json`, or work with `.data.json`/`.data.js`, `_fonts/`, or `assets/` files in that tree. Covers Lerret\'s conventions (meta export, propsSchema, variants, four-tier prop resolution, cascading config, auto-registered fonts, ambient CSS vars) and the `@lerret/cli` surface (`create-lerret`, `dev`, `export`). Bakes in aesthetic direction so generated visuals are distinctive, cohesive, and production-grade — not generic AI output.',
+    "Author and edit visual assets inside a Lerret project. Use whenever you create, modify, or refactor a `.jsx`/`.tsx` file under a `.lerret/` directory, change `config.json`, or work with `.data.json`/`.data.js`, `_fonts/`, or `assets/` files in that tree. Covers Lerret's conventions (meta export, propsSchema, variants, four-tier prop resolution, cascading config, auto-registered fonts, ambient CSS vars) and the `@lerret/cli` surface (`create-lerret`, `dev`, `export`). Bakes in aesthetic direction so generated visuals are distinctive, cohesive, and production-grade — not generic AI output.",
 
   // Short Cursor description (used in MDC frontmatter).
   cursorDescription: 'Lerret asset authoring conventions',
 
   // Intro paragraph that opens the body of every tool's file.
-  intro: `You are editing inside a Lerret project. Lerret is a folder-of-React-files design canvas: every \`.jsx\` or \`.tsx\` file under \`.lerret/\` is a visual asset that renders on the canvas. There is no UI framework to fight, no design system to inherit — only React, the conventions below, and the aesthetic bar.
+  intro: `You are editing inside a Lerret project. Lerret is a folder-of-React-files design canvas: every \`.jsx\` or \`.tsx\` file under \`.lerret/\` is a visual asset that renders on the canvas. There is no UI framework to fight — only React, the project's own \`_DESIGN.md\` brand authority, the conventions below, and the aesthetic bar.
 
 This guidance exists for two reasons:
 
@@ -221,6 +221,59 @@ Example root config:
 In an asset under that folder you can write \`style={{ color: 'var(--accentColor)' }}\` or simply destructure a \`brandColor\` prop if your \`propsSchema\` declares one — Tier 2 will fill it from \`vars\`.
 
 A folder-level config overrides the parent on a per-top-level-key basis. Setting \`vars\` in a child **replaces** the parent's \`vars\` entirely (no deep merge). If you want to extend rather than replace, repeat the parent keys you care about.`,
+
+  designSystem: `## \`_DESIGN.md\` — the brand authority
+
+\`.lerret/_DESIGN.md\` is the project's design system. **Read it before you author or edit any asset**, and use its values instead of inventing colours, sizes, or spacing — that consistency is what makes a set of assets look designed rather than generated.
+
+It is plain Markdown in [Google's open DESIGN.md format](https://github.com/google-labs-code/design.md): YAML front matter holding the tokens, then \`##\` sections of guidance.
+
+\`\`\`markdown
+---
+name: Acme
+colors:
+  brand: "#B85B33"
+  on-brand: "#FFFFFF"      # text colour to use ON brand
+typography:
+  display:
+    fontFamily: Geist
+    fontSize: 72px
+    fontWeight: "700"
+    lineHeight: 76px
+    letterSpacing: -0.03em
+  body:
+    fontFamily: Geist
+    fontSize: 18px
+    lineHeight: 28px
+spacing:
+  unit: 8px
+rounded:
+  DEFAULT: 12px
+---
+
+## Overview
+Calm and technical. Considered, never loud.
+
+## Voice
+- Calm, factual. No hype, no exclamation marks.
+
+<!-- scope: social/ -->
+## Social overrides
+- One idea per post. Lead with the verb.
+\`\`\`
+
+How to use it:
+
+- **Colours** — use a token's value directly in your inline styles. Every background token has a matching \`on-<name>\` text colour; use the pair so contrast stays readable.
+- **Typography** — take \`fontSize\`/\`fontWeight\`/\`lineHeight\`/\`letterSpacing\` from a level rather than picking your own. Two levels per asset at most.
+- **Spacing / rounded** — land padding, gaps, and margins on the \`spacing.unit\` grid; use the \`rounded\` values for corners.
+- **Voice** — applies to the copy you write into \`.data.json\`, not just the styling.
+- **\`<!-- scope: <folder>/ -->\`** — rules below that comment apply only to assets in that folder. The closest matching scope wins.
+
+Editing it: when the user asks for a **project-wide** look change ("change our brand colour to teal", "switch the typography"), update \`_DESIGN.md\` first, then the assets that hard-code the old values. Keep the front-matter schema, and never write two \`##\` headings with the same name. If the project has **no** \`_DESIGN.md\` and the user describes their brand, create one in this format.
+
+**Interop:** if the repo has a root \`DESIGN.md\` (the same Google format) and \`.lerret/_DESIGN.md\` does not exist yet, copy it to \`.lerret/_DESIGN.md\` — Lerret reads the same format, so the user's existing design system works as-is.
+`,
 
   fonts: `## Fonts — drop a file, use it
 
@@ -579,6 +632,7 @@ function sharedBody() {
     SECTIONS.autoRefresh,
     SECTIONS.propResolution,
     SECTIONS.cascadingConfig,
+    SECTIONS.designSystem,
     SECTIONS.fonts,
     SECTIONS.imageNaming,
     SECTIONS.cliSurface,

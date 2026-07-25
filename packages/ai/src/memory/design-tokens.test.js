@@ -101,9 +101,14 @@ describe('parseDesignTokens — canonical front matter', () => {
 
 describe('parseDesignTokens — unknown keys (no more silent drops)', () => {
   it('warns on an unrecognized top-level group and reads none of its entries', () => {
-    const md = ['---', 'shadows:', '  soft: 0 2px 4px', 'colors:', '  brand: "#000"', '---'].join(
-      '\n',
-    );
+    const md = [
+      '---',
+      'shadows:',
+      '  soft: 0 2px 4px',
+      'colors:',
+      '  brand: "#000"',
+      '---',
+    ].join('\n');
     const { colors, warnings } = parseDesignTokens(md);
     expect(colors.brand).toBe('#000');
     expect(colors.soft).toBeUndefined();
@@ -150,7 +155,9 @@ describe('parseDesignTokens — values with trailing YAML-style comments', () =>
   });
 
   it('an unquoted value strips a trailing ` # comment` without eating a bare hex', () => {
-    const md = ['---', 'colors:', '  brand: #B85B33', '  size: 12px # note', '---'].join('\n');
+    const md = ['---', 'colors:', '  brand: #B85B33', '  size: 12px # note', '---'].join(
+      '\n',
+    );
     const { colors } = parseDesignTokens(md);
     expect(colors.brand).toBe('#B85B33'); // bare hex untouched
     expect(colors.size).toBe('12px'); // comment stripped
@@ -166,9 +173,14 @@ describe('parseDesignTokens — fail-soft', () => {
   });
 
   it('ignores a stray lerret-tokens fence — it is prose, not a token format', () => {
-    const md = ['# Design', '', '```lerret-tokens', 'colors:', '  brand: "#B85B33"', '```'].join(
-      '\n',
-    );
+    const md = [
+      '# Design',
+      '',
+      '```lerret-tokens',
+      'colors:',
+      '  brand: "#B85B33"',
+      '```',
+    ].join('\n');
     const { colors, warnings } = parseDesignTokens(md);
     expect(Object.keys(colors)).toHaveLength(0);
     expect(warnings[0]).toContain('no YAML front matter');

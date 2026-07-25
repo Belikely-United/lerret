@@ -23,7 +23,12 @@ const DS_PATH = '.lerret/_DESIGN.md';
 
 /** Build a minimal `_DESIGN.md` (front matter only) with the given colors. */
 function ds(colors) {
-  return ['---', 'colors:', ...Object.entries(colors).map((e) => `  ${e[0]}: "${e[1]}"`), '---'].join('\n');
+  return [
+    '---',
+    'colors:',
+    ...Object.entries(colors).map((e) => `  ${e[0]}: "${e[1]}"`),
+    '---',
+  ].join('\n');
 }
 const CFG_PATH = '.lerret/config.json';
 
@@ -54,7 +59,9 @@ describe('createDsCuratorNode — authority order', () => {
     });
     const out = await createDsCuratorNode({ sandbox, emit })({});
     expect(out.brandTokens['brand-orange']).toBe('#ff6600'); // primary, not config
-    const note = emit.mock.calls.map((c) => c[0]).find((e) => e.type === 'clarifying-note');
+    const note = emit.mock.calls
+      .map((c) => c[0])
+      .find((e) => e.type === 'clarifying-note');
     expect(note).toBeDefined();
     expect(note.note).toMatch(/brand-token conflict on 'brand-orange'/);
     expect(note.note).toMatch(/using _DESIGN.md \(primary\)/);
@@ -94,10 +101,12 @@ describe('createDsCuratorNode — authority order', () => {
     expect(out.brandTokens.brand).toBe('#B85B33');
     expect(out.brandTokens.brandcolor).toBeUndefined();
     expect(out.brandTokens.radius).toBe('8px'); // non-colliding var still fills the gap
-    const note = emit.mock.calls.map((c) => c[0]).find((e) => e.type === 'clarifying-note');
+    const note = emit.mock.calls
+      .map((c) => c[0])
+      .find((e) => e.type === 'clarifying-note');
     expect(note).toBeDefined();
     expect(note.note).toMatch(/brand-token conflict on 'brand'/);
-    expect(note.note).toContain("brandColor"); // the user's ACTUAL var key
+    expect(note.note).toContain('brandColor'); // the user's ACTUAL var key
     expect(note.note).toContain('#FF0000');
     expect(note.note).toMatch(/using _DESIGN.md \(primary\)/);
   });
@@ -187,7 +196,9 @@ describe('createDsCuratorNode — prototype-pollution safety', () => {
     // Resolved as a plain data value, primary wins.
     expect(out.brandTokens.constructor).toBe('#fff');
     // Conflict surfaced like any other token.
-    const note = emit.mock.calls.map((c) => c[0]).find((e) => e.type === 'clarifying-note');
+    const note = emit.mock.calls
+      .map((c) => c[0])
+      .find((e) => e.type === 'clarifying-note');
     expect(note.note).toMatch(/brand-token conflict on 'constructor'/);
     // Object.prototype is untouched.
     expect(Object.prototype.constructor).toBe(Object);

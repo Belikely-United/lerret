@@ -34,7 +34,9 @@ describe('scaffolded _DESIGN.md — parser lockstep', () => {
   it('ships a _DESIGN.md in the base template and every preset', () => {
     expect(PROJECTS.length).toBeGreaterThan(1);
     for (const [name, dir] of PROJECTS) {
-      expect(existsSync(join(dir, '_DESIGN.md')), `${name} is missing _DESIGN.md`).toBe(true);
+      expect(existsSync(join(dir, '_DESIGN.md')), `${name} is missing _DESIGN.md`).toBe(
+        true,
+      );
     }
   });
 
@@ -47,23 +49,35 @@ describe('scaffolded _DESIGN.md — parser lockstep', () => {
     expect(Object.keys(parsed.typography).length).toBeGreaterThanOrEqual(2);
     expect(parsed.spacing.unit).toBeTruthy();
     for (const [level, props] of Object.entries(parsed.typography)) {
-      expect(props.fontFamily, `${name}: typography.${level} has no fontFamily`).toBeTruthy();
+      expect(
+        props.fontFamily,
+        `${name}: typography.${level} has no fontFamily`,
+      ).toBeTruthy();
       expect(props.fontSize, `${name}: typography.${level} has no fontSize`).toBeTruthy();
     }
   });
 
-  it.each(PROJECTS)('%s pairs every background color with an on-<name> text color', (name, dir) => {
-    const { colors } = parseDesignTokens(readFileSync(join(dir, '_DESIGN.md'), 'utf-8'));
-    const names = Object.keys(colors);
-    const paired = names.filter((n) => n.startsWith('on-'));
-    expect(paired.length, `${name} declares no on-<color> pairing`).toBeGreaterThan(0);
-    for (const on of paired) {
-      expect(names, `${name}: ${on} has no matching background token`).toContain(on.slice(3));
-    }
-  });
+  it.each(PROJECTS)(
+    '%s pairs every background color with an on-<name> text color',
+    (name, dir) => {
+      const { colors } = parseDesignTokens(
+        readFileSync(join(dir, '_DESIGN.md'), 'utf-8'),
+      );
+      const names = Object.keys(colors);
+      const paired = names.filter((n) => n.startsWith('on-'));
+      expect(paired.length, `${name} declares no on-<color> pairing`).toBeGreaterThan(0);
+      for (const on of paired) {
+        expect(names, `${name}: ${on} has no matching background token`).toContain(
+          on.slice(3),
+        );
+      }
+    },
+  );
 
   it.each(PROJECTS)('%s exposes dot-path references for its tokens', (name, dir) => {
-    const flat = flattenTokens(parseDesignTokens(readFileSync(join(dir, '_DESIGN.md'), 'utf-8')));
+    const flat = flattenTokens(
+      parseDesignTokens(readFileSync(join(dir, '_DESIGN.md'), 'utf-8')),
+    );
     expect([...flat.keys()].some((k) => k.startsWith('colors.'))).toBe(true);
     expect(flat.get('spacing.unit')).toBeTruthy();
   });
@@ -72,21 +86,24 @@ describe('scaffolded _DESIGN.md — parser lockstep', () => {
   // a colour-ish key (acme's `vars.brand` is the string "Acme"). Declaring a
   // `brand` colour token there would canonically collide and fire a brand-token
   // conflict note on EVERY turn of a freshly scaffolded project.
-  it.each(PROJECTS)('%s produces no brand-token conflict against its own config.json', async (name, dir) => {
-    const files = {
-      [DESIGN_SYSTEM_PATH]: readFileSync(join(dir, '_DESIGN.md'), 'utf-8'),
-      '.lerret/config.json': readFileSync(join(dir, 'config.json'), 'utf-8'),
-    };
-    const notes = [];
-    const sandbox = {
-      exists: async (p) => Object.prototype.hasOwnProperty.call(files, p),
-      readFile: async (p) => files[p],
-    };
-    const out = await createDsCuratorNode({
-      sandbox,
-      emit: (e) => e?.type === 'clarifying-note' && notes.push(e.note),
-    })({});
-    expect(notes, `${name} scaffolds into a conflicting brand state`).toEqual([]);
-    expect(Object.keys(out.brandTokens).length).toBeGreaterThan(0);
-  });
+  it.each(PROJECTS)(
+    '%s produces no brand-token conflict against its own config.json',
+    async (name, dir) => {
+      const files = {
+        [DESIGN_SYSTEM_PATH]: readFileSync(join(dir, '_DESIGN.md'), 'utf-8'),
+        '.lerret/config.json': readFileSync(join(dir, 'config.json'), 'utf-8'),
+      };
+      const notes = [];
+      const sandbox = {
+        exists: async (p) => Object.prototype.hasOwnProperty.call(files, p),
+        readFile: async (p) => files[p],
+      };
+      const out = await createDsCuratorNode({
+        sandbox,
+        emit: (e) => e?.type === 'clarifying-note' && notes.push(e.note),
+      })({});
+      expect(notes, `${name} scaffolds into a conflicting brand state`).toEqual([]);
+      expect(Object.keys(out.brandTokens).length).toBeGreaterThan(0);
+    },
+  );
 });

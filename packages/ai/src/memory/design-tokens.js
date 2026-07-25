@@ -186,7 +186,7 @@ export function parseDesignTokens(designMarkdown) {
       if (!SPEC_KNOWN_UNREAD.has(lower)) {
         out.warnings.push(
           `_DESIGN.md: ignored unrecognized top-level key '${key}'${
-            hasValue ? '' : " — its entries were not read"
+            hasValue ? '' : ' — its entries were not read'
           }.`,
         );
       }
