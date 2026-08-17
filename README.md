@@ -108,8 +108,7 @@ export default function TwitterBanner() {
 }
 
 export const meta = {
-  width: 1500,
-  height: 500,
+  dimensions: { width: 1500, height: 500 },
   tags: ['twitter', 'banner'],
 };
 ```

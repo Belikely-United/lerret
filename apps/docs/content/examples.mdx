@@ -40,7 +40,7 @@ export const meta = {
 
 **Design notes.** The whole iPhone is built in CSS — outer titanium gradient bezel, inner glossy ring, screen, dynamic island, status bar with time + signal indicators. The mock app inside renders three "artboard" cards (the same patterns the user might author in Lerret), so the poster recursively shows the product. `PhoneFrame` and `MockApp` are kept as local helpers in the file so the asset stays self-contained — you can swap the mock-app body for your own.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/phone-hero.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/phone-hero.jsx)
 
 ---
 
@@ -70,7 +70,7 @@ export const meta = {
 
 **Design notes.** App Store screenshots are essentially **one big marketing claim + one phone frame**. The phone is anchored bottom-center with `bottom: -60` so the device extends past the canvas — that "spilling out of the page" treatment is the convention you see across the Apple ecosystem screenshot examples. Inside the frame is a mock code editor (mono syntax) followed by a preview-card thumbnail — that combination of "code → preview" shows what the app actually does without faking screenshots. Build five or six of these for an app launch, swap headlines + page number.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/app-store-screenshot.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/app-store-screenshot.jsx)
 
 ---
 
@@ -101,7 +101,7 @@ export const meta = {
 
 **Design notes.** The laptop frame is also pure CSS: a tilted-trapezoid base + rounded screen with traffic-light dots and a faux toolbar. The 3×2 bento inside the laptop shows the breadth of what Lerret renders — using the **same patterns** the other examples in this gallery teach (PH launch, stars milestone, OSS release, hiring, testimonial, release card). The phone overlaps the laptop's bottom-left corner like an iOS marketing shot. Restraint: no shadow under the devices that's so dark it looks fake; the natural drop-shadow from `filter: drop-shadow(...)` is enough.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/multi-device.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/multi-device.jsx)
 
 ---
 
@@ -132,7 +132,7 @@ export const meta = {
 
 **Design notes.** The split layout (60/40) is the PH-gallery convention — readers scan the left for the claim, scan the right for the proof. The right panel inverts the palette so the metric reads as quotable and the whole image holds together as a single object.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/ph-gallery.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/ph-gallery.jsx)
 
 ---
 
@@ -162,7 +162,7 @@ export const meta = {
 
 **Design notes.** No pills, no buttons, no avatars — just a masthead, a stacked callout, the product name as the visual centerpiece, and a tour-style date strip.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/product-hunt.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/product-hunt.jsx)
 
 ---
 
@@ -192,7 +192,7 @@ export const meta = {
 
 **Design notes.** Type-as-image — the feature word IS the design. Sized at 280px so it fits cleanly inside the canvas with breathing room either side, while the outlined "new" echo nested below-left at 180px / −6° gives the print-shop / risograph energy. The cherry-red band at the bottom is a flat color block, not a gradient — that's the screen-print signal.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/feature-launch.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/feature-launch.jsx)
 
 ---
 
@@ -223,7 +223,7 @@ export const meta = {
 
 **Design notes.** Mixing serif and mono is the trick: pure monospace would feel like a literal terminal screenshot, pure serif would lose the dev signal. The Georgia italic project name sits **inside** the terminal scaffolding — green prompt above, repo URL below.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/open-source.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/open-source.jsx)
 
 ---
 
@@ -257,7 +257,7 @@ export const meta = {
 
 **Design notes.** The single olive accent stripe + numbered ledger rows are pure Swiss modernist conventions (Müller-Brockmann posters, Wim Crouwel grids). Each note row is a `border-bottom` ledger line with the index in monospace olive on the right.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/release-card.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/release-card.jsx)
 
 ---
 
@@ -287,7 +287,7 @@ export const meta = {
 
 **Design notes.** The italic serif number is doing the heavy lifting — it reads as poetry, not a metric. Vertical rotated text with `-webkit-text-stroke` gives the side-spine pattern from book covers and movie posters.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/stars-milestone.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/stars-milestone.jsx)
 
 ---
 
@@ -318,7 +318,7 @@ export const meta = {
 
 **Design notes.** Tabular numerals on the figure (always tabular for financial / quantity figures — they line up reading right-to-left). The hairline frame keeps the composition reading as "a printed announcement" rather than "a digital banner."
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/linkedin-announcement.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/linkedin-announcement.jsx)
 
 ---
 
@@ -350,7 +350,7 @@ export const meta = {
 
 **Design notes.** The brutalist signal is the **outlined "WANTED."** (`-webkit-text-stroke: 4px`), the diagonal `transform: rotate(8deg)` red stamp with a 6px offset shadow, and the thick `4px solid` ledger lines on the perks.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/hiring.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/hiring.jsx)
 
 ---
 
@@ -386,7 +386,7 @@ export const meta = {
 
 **Design notes.** Talk title is the hero (84px italic serif, in quotes) — that's what actually sells a talk. Speaker treated as the "performer" credit below a horizontal amber marquee gradient line (the "stage"). Topics joined with ✦ in mono caps borrow from gig-flyer "with opening acts" patterns.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/talk-promo.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/talk-promo.jsx)
 
 ---
 
@@ -417,7 +417,7 @@ export const meta = {
 
 **Design notes.** The decorative outlined `01` is 3× the canvas height and clipped by the edge — straight out of magazine-cover layout. Mixed Georgia italic for editorial weight, system sans + monospace for the masthead grid.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/testimonial.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/testimonial.jsx)
 
 ---
 
@@ -454,7 +454,7 @@ export const meta = {
 
 **Design notes.** No cards, no boxes. The year is the visual; the stats are a typed ledger with `border-top` rules and large numbers right-aligned. Wine red (`#8C2A1B`) is the only accent.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/year-review.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/year-review.jsx)
 
 ---
 
@@ -484,7 +484,7 @@ export const meta = {
 
 **Design notes.** The single outlined word at 320px is the entire poster — `-webkit-text-stroke: 2px` + `color: transparent` so it reads as drawn type. Restraint is the move: don't reveal the product, just promise the date.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/teaser.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/teaser.jsx)
 
 ---
 
@@ -513,7 +513,7 @@ export const meta = {
 
 **Design notes.** Render the statement word-by-word and color only the trailing period in the pink accent. Tiny detail, but it lands like a punctuation mark that makes the line declarative.
 
-[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/public/apps/docs/_examples-fixture/.lerret/examples/manifesto.jsx)
+[View full source on GitHub →](https://github.com/belikely-united/lerret/blob/main/apps/docs/_examples-fixture/.lerret/examples/manifesto.jsx)
 
 ---
 
