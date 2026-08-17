@@ -11,7 +11,7 @@ At its core, Lerret rests on two architectural choices:
 
 **Your project is a folder. Lerret renders it.** There is no save button, no design mode, no proprietary file. The `.lerret/` directory on disk *is* the project — Lerret only reflects what's already there. Git treats it like any other folder. If Lerret disappears tomorrow, you still have a working set of React components.
 
-**Because everything is React, every LLM already knows how to edit it.** Just files an AI was trained on millions of times over. Lerret's own AI comes two ways: the in-studio dock (bring your own key) and `/lerret`, installed as a Claude Code plugin (keyless, Claude Code only).
+**Because everything is React, every LLM already knows how to edit it.** Just files an AI was trained on millions of times over. Lerret's own AI comes two ways: the in-studio dock (your own key, or local Ollama) and `/lerret`, installed as a Claude Code plugin (keyless, Claude Code only).
 
 Mechanically: each `.jsx` / `.tsx` file in `.lerret/` becomes an **artboard** with its own pan-and-zoom card on the canvas; saving the file re-renders the artboard in under a second. You can export every artboard to PNG or JPG headlessly — single asset, page group, or whole project as a structured ZIP. No backend, no account.
 
