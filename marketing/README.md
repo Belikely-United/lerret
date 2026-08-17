@@ -1,0 +1,1 @@
+Growth notes and open marketing tickets live in the private repo: belikely-united/lerret-internal (issues #4 tutorials, #5 marketing video, #6 silent/organic strategy; also _bmad-output/planning-artifacts/marketing-ideas.md).
