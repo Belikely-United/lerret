@@ -24,17 +24,22 @@ bunx create-lerret@latest my-canvas
 ## Options
 
 ```sh
-create-lerret <project-name>                  # 5-page teaching kit + AI-tool files
-create-lerret <project-name> --no-samples     # minimal empty project (.lerret/config.json only)
-create-lerret <project-name> --no-ai-rules    # skip all AI-tool files
-create-lerret <project-name> --ai-tools=claude,cursor   # scope AI surfaces
-create-lerret <project-name> --preset acme    # named preset from presets.json
-create-lerret <project-name> --demo           # teaching preset + first-run walkthrough marker
+create-lerret <project-name>                            # 5-page teaching kit + AI-tool files
+create-lerret <project-name> --no-samples               # minimal empty project
+create-lerret <project-name> --no-ai-rules              # skip every AI-tool file
+create-lerret <project-name> --ai-tools=claude,cursor   # scope which AI-tool files ship
+create-lerret <project-name> --preset acme              # scaffold a named preset instead
+create-lerret <project-name> --demo                     # teaching kit + first-run walkthrough
+create-lerret --help                                    # usage banner (also -h)
 ```
 
-- `--no-samples` still ships the AI-tool files unless `--no-ai-rules` is also set.
-- `--ai-tools=<list>` accepts `claude`, `cursor`, `copilot`, `agents`. Mutually exclusive with `--no-ai-rules`.
-- `--preset <name>` accepts `acme`, `appstore`, `producthunt`, `social-media`, `talks`, `personal`, `live`.
+- `--no-samples` writes only `.lerret/config.json`, with an empty `vars` map — no pages, no assets, no `_fonts/`. The canvas opens on the empty state. AI-tool files still ship unless you also pass `--no-ai-rules` or `--ai-tools=…`.
+- `--no-ai-rules` skips all four AI-tool surfaces.
+- `--ai-tools=<list>` is a comma-separated list of `claude`, `cursor`, `copilot`, `agents` — only the named surfaces are written. Pass it once; a repeated flag is rejected rather than silently reduced to the last value.
+- `--preset <name>` scaffolds a preset in place of the teaching kit: `acme` (brand starter), `appstore` (App Store screenshots), `producthunt` (launch assets), `social-media` (six social sizes), `talks` (conference slides), `personal` (homepage assets), `live` (LiveRefresh demos).
+- `--demo` scaffolds the default teaching kit, writes a `.lerret/.state/first-run.json` marker so the studio offers the walkthrough on first mount, then starts `@lerret/cli dev --open` for you. Starting the studio is best-effort — if the spawn fails you still have the project and can run `dev` yourself.
+
+Mutually exclusive pairs (the CLI exits 1 and explains): `--no-ai-rules` with `--ai-tools`; `--preset` with `--no-samples`; `--demo` with `--preset`; `--demo` with `--no-samples`.
 
 ## What it produces
 
@@ -44,10 +49,11 @@ my-canvas/
 │   ├── config.json
 │   ├── README.md
 │   ├── _fonts/
-│   │   └── LerretFixtureMono.woff2
+│   │   ├── LerretFixtureMono.woff2
+│   │   └── NOTICE
 │   ├── intro/
-│   │   ├── welcome.md
-│   │   └── config.json
+│   │   ├── config.json
+│   │   └── welcome.md
 │   ├── landing/
 │   │   ├── landing-hero.jsx
 │   │   └── about-vars.md
@@ -62,6 +68,7 @@ my-canvas/
 │   │   ├── business-card.data.json
 │   │   └── about-validation.md
 │   └── live/
+│       ├── config.json
 │       ├── clock.jsx
 │       ├── clock.config.json
 │       ├── counter.jsx
@@ -75,7 +82,9 @@ my-canvas/
 └── AGENTS.md
 ```
 
-Each `.jsx` under `.lerret/` is an asset that renders as an artboard in the studio; each top-level folder is a page. The `.md` files are the teaching notes for that page, and the AI-tool files are rendered at scaffold time so your editor's assistant knows how to author Lerret assets.
+Every folder under `.lerret/` is a page, except the reserved `_fonts/`. Each `.jsx` in a page is an artboard; each `.md` is one too, rendered as a Markdown card — which is why the teaching notes (`about-vars.md`, `about-data-files.md`, `about-validation.md`, `about-live-refresh.md`) read on the canvas beside the assets they explain. Five pages, five lessons: `intro` welcomes you, `landing` covers config vars, `social` covers `.data.json` sidecars, `brand` covers props validation, and `live` covers LiveRefresh via `.config.json`.
+
+The AI-tool files sit outside `.lerret/` and are rendered at scaffold time rather than copied from the template, so your editor's assistant knows how to author Lerret assets from the first prompt.
 
 ## Source & docs
 
