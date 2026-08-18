@@ -1068,6 +1068,12 @@ describe('--help flag', () => {
     expect(stdout).toMatch(/--no-ai-rules/);
     expect(stdout).toMatch(/--ai-tools/);
   });
+
+  it('usage banner mentions --preset and --demo', async () => {
+    const { stdout } = await runMain(['--help'], { cwd: tmpDir });
+    expect(stdout).toMatch(/--preset/);
+    expect(stdout).toMatch(/--demo/);
+  });
 });
 
 // ---------------------------------------------------------------------------
