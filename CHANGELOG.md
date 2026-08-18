@@ -85,6 +85,12 @@ The published packages are [`@lerret/cli`](https://www.npmjs.com/package/@lerret
 ### Added
 - First public release. Environment-agnostic engine: filesystem contract, project loader, watcher, config cascade with deep-merge semantics, four-tier prop resolution, variant resolution, props validation, export traversal helper.
 
+## create-lerret 0.1.4 — 2026-08-18
+
+### Changed
+- Version bump so the current scaffolder can be published. The published 0.1.3 tarball still shipped the old three-asset social kit (`twitter-banner` / `instagram-square` / `youtube-thumbnail`), which has not been what the repo produces for some time: the default template is the five-page teaching kit (`intro` / `landing` / `social` / `brand` / `live`), and the CLI grew `--preset`, `--demo`, `--no-ai-rules`, and `--ai-tools=<list>` plus the four AI-tool surfaces (`.claude/`, `.cursor/`, `.github/copilot-instructions.md`, `AGENTS.md`) rendered at scaffold time. Anyone running `npx create-lerret@latest` was getting a scaffold two feature generations behind the docs. No source changes in this release — the code was already correct, only unpublished.
+- `packages/create-lerret/README.md` Options and "What it produces" now describe the real flags and the real template tree, so the npm page stops advertising assets the scaffolder no longer writes.
+
 ## create-lerret 0.1.3 — 2026-05-22
 
 ### Changed
