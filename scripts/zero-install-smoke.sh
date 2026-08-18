@@ -159,10 +159,12 @@ verify_full_tree() {
   local TREE_OK=1
   for expected in \
       ".lerret/config.json" \
-      ".lerret/social/twitter-banner.jsx" \
-      ".lerret/social/instagram-square.jsx" \
-      ".lerret/social/youtube-thumbnail.jsx" \
       ".lerret/_fonts/LerretFixtureMono.woff2" \
+      ".lerret/intro/welcome.md" \
+      ".lerret/landing/landing-hero.jsx" \
+      ".lerret/social/tw-banner.jsx" \
+      ".lerret/brand/business-card.jsx" \
+      ".lerret/live/clock.jsx" \
   ; do
     if [[ ! -f "${PROJ_DIR}/${expected}" ]]; then
       fail "${RUNNER}: missing expected file: ${expected}"
