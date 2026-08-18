@@ -124,7 +124,7 @@ export default async function RootLayout({ children }) {
           footer={footer}
           search={<LerretDocSearch />}
           pageMap={pageMap}
-          docsRepositoryBase="https://github.com/belikely-united/lerret/tree/main/public/apps/docs/content"
+          docsRepositoryBase="https://github.com/belikely-united/lerret/tree/main/apps/docs/content"
           editLink="Edit this page on GitHub"
           sidebar={{ defaultMenuCollapseLevel: 1 }}
         >

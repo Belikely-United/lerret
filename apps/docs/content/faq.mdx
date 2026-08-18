@@ -11,7 +11,7 @@ At its core, Lerret rests on two architectural choices:
 
 **Your project is a folder. Lerret renders it.** There is no save button, no design mode, no proprietary file. The `.lerret/` directory on disk *is* the project — Lerret only reflects what's already there. Git treats it like any other folder. If Lerret disappears tomorrow, you still have a working set of React components.
 
-**Because everything is React, every LLM already knows how to edit it.** No plugin, no MCP, no design-tool SDK — just files an AI was trained on millions of times over.
+**Because everything is React, every LLM already knows how to edit it.** Just files an AI was trained on millions of times over. Lerret's own AI comes two ways: the in-studio dock (your own key, or local Ollama) and `/lerret`, installed as a Claude Code plugin (keyless, Claude Code only).
 
 Mechanically: each `.jsx` / `.tsx` file in `.lerret/` becomes an **artboard** with its own pan-and-zoom card on the canvas; saving the file re-renders the artboard in under a second. You can export every artboard to PNG or JPG headlessly — single asset, page group, or whole project as a structured ZIP. No backend, no account.
 
@@ -105,9 +105,9 @@ Expect occasional sharp edges in the 0.1.x series; the public API stabilises for
 |---|---|
 | Zero-install via `npx` / `pnpm dlx` | `npx @lerret/cli@latest dev` |
 | After installing the CLI as a dep, then via `package.json` scripts or `pnpm exec` | `@lerret/cli dev` |
-| After installing the CLI globally | `@lerret/cli dev` |
+| After installing the CLI globally | `lerret dev` |
 
-The bare `lerret` package name on npm belongs to a different, unrelated, deprecated project — so the scoped form `@lerret/cli` is required when invoking via `npx`. Once installed (the binary is on your PATH), `@lerret/cli dev` works directly.
+The bare `lerret` package name on npm belongs to a different, unrelated, deprecated project — so the scoped form `@lerret/cli` is required when invoking via `npx`. Once installed globally (the binary is on your PATH), you invoke it by its binary name — `lerret dev` — not by the scoped package name.
 
 ## Can I use TypeScript?
 

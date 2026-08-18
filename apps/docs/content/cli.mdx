@@ -13,11 +13,11 @@ The Lerret CLI ships as the npm package **`@lerret/cli`**. It installs one binar
 |---|---|
 | Zero-install (`npx`) | `npx @lerret/cli@latest dev` |
 | Installed as a project dep | `@lerret/cli dev` (via `package.json` scripts, `pnpm exec`, `npx`, etc.) |
-| Installed globally | `@lerret/cli dev` |
+| Installed globally | `lerret dev` |
 
 > Don't run `npx lerret …` — the bare `lerret` name belongs to a different (unrelated, deprecated) npm package. Always include the `@lerret/cli` scope when invoking via `npx`.
 
-The command syntax shown below uses the canonical `@lerret/cli` form — it works identically in every context above.
+The command syntax shown below uses the canonical `@lerret/cli` form. The flags and behaviour are identical in every context above — only the invocation prefix changes (`lerret …` once the binary is on your PATH via a global install).
 
 ### Exit codes
 
