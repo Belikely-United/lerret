@@ -87,9 +87,17 @@ The published packages are [`@lerret/cli`](https://www.npmjs.com/package/@lerret
 
 ## create-lerret 0.1.4 — 2026-08-18
 
+### Added
+- Default scaffold is now a five-page teaching kit instead of the three standalone social assets it shipped at 0.1.0. Each page teaches one Lerret idea and carries a Markdown card explaining it: `intro/` (welcome), `landing/` (config vars, `landing-hero.jsx` + `about-vars.md`), `social/` (`.data.json` sidecars, `tw-banner.jsx` + `og-card.jsx` with their data files), `brand/` (props validation, `business-card.jsx` + data), and `live/` (LiveRefresh, `clock.jsx` + `counter.jsx` with their `.config.json` files). A shared `vars` block in `.lerret/config.json` re-skins the kit.
+- AI-tool integration files, rendered at scaffold time from `src/ai-content.js` rather than copied from the template: `.claude/` (an author skill and an edit command), `.cursor/rules/lerret.mdc`, `.github/copilot-instructions.md`, and `AGENTS.md`. Every file written is enumerated in the success message — no silent writes. They ship with minimal (`--no-samples`) scaffolds too, since an empty project is where authoring guidance helps most.
+- `--no-ai-rules` skips all four AI-tool surfaces; `--ai-tools=<list>` scopes them to a comma-separated subset of `claude`, `cursor`, `copilot`, `agents`. Passing `--ai-tools` more than once is rejected rather than silently collapsed to the last value, which is what `node:util` `parseArgs` would otherwise do.
+- `--preset <name>` scaffolds a named preset from `presets.json` in place of the teaching kit: `acme`, `appstore`, `producthunt`, `social-media`, `talks`, `personal`, `live`.
+- `--demo` scaffolds the teaching kit, writes a `.lerret/.state/first-run.json` marker so the studio offers the walkthrough on first mount, and spawns `@lerret/cli dev --open`. Both the marker write and the spawn are best-effort — either failing leaves a working project rather than an error.
+- Mutual exclusions, each rejected with an explanation rather than a silent precedence rule: `--no-ai-rules` with `--ai-tools`, `--preset` with `--no-samples`, `--demo` with `--preset`, and `--demo` with `--no-samples`.
+
 ### Changed
-- Version bump so the current scaffolder can be published. The published 0.1.3 tarball still shipped the old three-asset social kit (`twitter-banner` / `instagram-square` / `youtube-thumbnail`), which has not been what the repo produces for some time: the default template is the five-page teaching kit (`intro` / `landing` / `social` / `brand` / `live`), and the CLI grew `--preset`, `--demo`, `--no-ai-rules`, and `--ai-tools=<list>` plus the four AI-tool surfaces (`.claude/`, `.cursor/`, `.github/copilot-instructions.md`, `AGENTS.md`) rendered at scaffold time. Anyone running `npx create-lerret@latest` was getting a scaffold two feature generations behind the docs. No source changes in this release — the code was already correct, only unpublished.
-- `packages/create-lerret/README.md` Options and "What it produces" now describe the real flags and the real template tree, so the npm page stops advertising assets the scaffolder no longer writes.
+- `scripts/zero-install-smoke.sh` `verify_full_tree` now asserts the five-page teaching kit files (`intro/welcome.md`, `landing/landing-hero.jsx`, `social/tw-banner.jsx`, `brand/business-card.jsx`, `live/clock.jsx`) instead of the deleted `twitter-banner` / `instagram-square` / `youtube-thumbnail` paths, which made the smoke run fail against every scaffold since 0.1.4.
+- `packages/create-lerret/README.md` "Options" and "What it produces" rewritten against the template and CLI source. The npm page was still advertising a `twitter-banner` / `instagram-square` / `youtube-thumbnail` kit the scaffolder no longer writes, and documented none of the flags above. The scaffold tree is now file-for-file what `fsp.cp` copies out of `template/.lerret/`.
 
 ## create-lerret 0.1.3 — 2026-05-22
 
