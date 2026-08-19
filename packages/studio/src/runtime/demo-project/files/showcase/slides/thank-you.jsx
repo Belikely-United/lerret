@@ -8,7 +8,7 @@ export const meta = {
     title: { type: 'string', default: 'thanks.', description: 'Big closing word.' },
     speaker: { type: 'string', default: 'belikely united', description: 'Speaker name.' },
     handle: { type: 'string', default: '@lerret', description: 'Primary handle.' },
-    link: { type: 'string', default: 'lerret.belikely.com', description: 'Project link.' },
+    link: { type: 'string', default: 'lerret.io', description: 'Project link.' },
   },
 };
 
@@ -16,7 +16,7 @@ export default function ThankYou({
   title = 'thanks.',
   speaker = 'belikely united',
   handle = '@lerret',
-  link = 'lerret.belikely.com',
+  link = 'lerret.io',
 }) {
   return (
     <div

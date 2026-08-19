@@ -9,14 +9,14 @@ The published packages are [`@lerret/cli`](https://www.npmjs.com/package/@lerret
 ## [Unreleased]
 
 ### Added
-- Marketing landing site scaffold (Astro 5) for `lerret.belikely.com`, hosted on Firebase. Private — lives in the maintainer workspace.
+- Marketing landing site scaffold (Astro 5) for `lerret.io`, hosted on Firebase. Private — lives in the maintainer workspace.
 - `app/sitemap.js` and `app/robots.js` for the docs site so search crawlers (Algolia DocSearch first) can discover all pages.
 - A "Community & support" channels table on the docs root.
 
 ### Changed
 - **License: relicensed to MIT.** Lerret is now MIT-licensed — free to use, self-host, modify, embed, and redistribute, including in commercial and closed-source products. This reverts the brief AGPL-3.0 + commercial dual-license; the commercial license and CLA are dropped in favor of a DCO (`Signed-off-by`). The core stays fully open; the project is sustained by hosted services around it, not by the license.
 - Docs content expanded from 221 → 1,556 lines across 8 pages. Every CLI flag, prop tier, config rule, and asset behavior verified against the actual source in `packages/cli` and `packages/core`.
-- Nextra global footer now surfaces GitHub, Discussions, Issues, npm, X, and `lerret.belikely.com` on every page; navbar gains a Discussions link.
+- Nextra global footer now surfaces GitHub, Discussions, Issues, npm, X, and `lerret.io` on every page; navbar gains a Discussions link.
 
 ### Fixed
 - `docsRepositoryBase` in the Nextra layout pointed at the wrong path (missing the `public/` workspace prefix), which 404'd every "Edit this page on GitHub" link.
@@ -45,7 +45,7 @@ The published packages are [`@lerret/cli`](https://www.npmjs.com/package/@lerret
 ## @lerret/cli 0.1.5 — 2026-05-22
 
 ### Changed
-- Republished alongside the docs URL canonicalization. All README and badge references switched from `lerret-docs.web.app` to the branded `docs.lerret.belikely.com`. No code changes.
+- Republished alongside the docs URL canonicalization. All README and badge references switched from `lerret-docs.web.app` to the branded `docs.lerret.io`. No code changes.
 
 ## @lerret/cli 0.1.4 — 2026-05-22
 
@@ -73,7 +73,7 @@ The published packages are [`@lerret/cli`](https://www.npmjs.com/package/@lerret
 ## @lerret/core 0.1.2 — 2026-05-22
 
 ### Changed
-- Republished alongside the docs URL canonicalization. README points at `docs.lerret.belikely.com`. No code changes.
+- Republished alongside the docs URL canonicalization. README points at `docs.lerret.io`. No code changes.
 
 ## @lerret/core 0.1.1 — 2026-05-21
 
@@ -102,7 +102,7 @@ The published packages are [`@lerret/cli`](https://www.npmjs.com/package/@lerret
 ## create-lerret 0.1.3 — 2026-05-22
 
 ### Changed
-- Republished alongside the docs URL canonicalization. README points at `docs.lerret.belikely.com`. No code changes.
+- Republished alongside the docs URL canonicalization. README points at `docs.lerret.io`. No code changes.
 
 ## create-lerret 0.1.2 — 2026-05-21
 

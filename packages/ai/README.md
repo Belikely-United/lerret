@@ -1,6 +1,6 @@
 # @lerret/ai
 
-In-studio AI subsystem for [Lerret](https://lerret.belikely.com) — a multi-agent orchestrator, a four-provider abstraction (OpenAI / Anthropic / OpenRouter — bring-your-own-key; Ollama — fully local), an encrypted client-side key vault, brand-memory curation, deterministic generation workflows, and a per-turn snapshot/revert store.
+In-studio AI subsystem for [Lerret](https://lerret.io) — a multi-agent orchestrator, a four-provider abstraction (OpenAI / Anthropic / OpenRouter — bring-your-own-key; Ollama — fully local), an encrypted client-side key vault, brand-memory curation, deterministic generation workflows, and a per-turn snapshot/revert store.
 
 This package is the home for every byte of Lerret's AI code. The other Lerret packages (`@lerret/studio`, `@lerret/cli`) reach this code **only** via dynamic import (`await import('@lerret/ai')`) — never statically. That boundary keeps the studio's main chunk free of LangGraph + provider code, lets you remove the dependency cleanly in one PR if you ever need to slim down the install, and gives AI its own test/version/release lane.
 

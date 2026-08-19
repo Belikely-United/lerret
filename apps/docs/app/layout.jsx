@@ -24,7 +24,7 @@ export const metadata = {
   },
   description:
     'An open-source design canvas where a folder of plain React component files renders as a visual canvas.',
-  metadataBase: new URL('https://docs.lerret.belikely.com'),
+  metadataBase: new URL('https://docs.lerret.io'),
   icons: {
     icon: [{ url: '/favicon.png', type: 'image/png', sizes: '32x32' }],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
@@ -98,8 +98,8 @@ export default async function RootLayout({ children }) {
           <a href={X_URL} target="_blank" rel="noreferrer" style={footerLinkStyle}>
             X (@sooryagangaraj)
           </a>
-          <a href="https://lerret.belikely.com" target="_blank" rel="noreferrer" style={footerLinkStyle}>
-            lerret.belikely.com
+          <a href="https://lerret.io" target="_blank" rel="noreferrer" style={footerLinkStyle}>
+            lerret.io
           </a>
         </div>
         <div style={{ opacity: 0.65, fontSize: '0.8125rem' }}>

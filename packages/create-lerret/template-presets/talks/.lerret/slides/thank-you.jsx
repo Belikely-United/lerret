@@ -25,7 +25,7 @@ export const meta = {
     },
     link: {
       type: 'string',
-      default: 'lerret.belikely.com',
+      default: 'lerret.io',
       description: 'Project / personal link.',
     },
   },
@@ -35,7 +35,7 @@ export default function ThankYou({
   title = 'thanks.',
   speaker = 'Your Name',
   handle = '@you',
-  link = 'lerret.belikely.com',
+  link = 'lerret.io',
 }) {
   return (
     <div

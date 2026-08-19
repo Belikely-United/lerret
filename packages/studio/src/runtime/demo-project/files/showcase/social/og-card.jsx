@@ -10,7 +10,7 @@ export const meta = {
   tags: ['social', 'og'],
   propsSchema: {
     headline: { type: 'string', default: 'Ship design straight from code' },
-    tag: { type: 'string', default: 'lerret.belikely.com' },
+    tag: { type: 'string', default: 'lerret.io' },
   },
 };
 

@@ -23,7 +23,7 @@
     "url": "git+https://github.com/belikely-united/lerret.git",
     "directory": "packages/create-lerret"
   },
-  "homepage": "https://lerret.belikely.com",
+  "homepage": "https://lerret.io",
   "bugs": {
     "url": "https://github.com/belikely-united/lerret/issues"
   },

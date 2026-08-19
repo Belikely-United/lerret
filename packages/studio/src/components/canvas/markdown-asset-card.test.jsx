@@ -61,7 +61,7 @@ describe('MarkdownAssetCard', () => {
  '1. ordered one',
  '2. ordered two',
  '',
- '[a link](https://lerret.belikely.com)',
+ '[a link](https://lerret.io)',
  '',
  '```js',
  'const x = 1;',
@@ -86,7 +86,7 @@ describe('MarkdownAssetCard', () => {
  expect(container.querySelectorAll('li').length).toBe(4);
  // Link — href preserved
  const link = container.querySelector('a');
- expect(link.getAttribute('href')).toBe('https://lerret.belikely.com');
+ expect(link.getAttribute('href')).toBe('https://lerret.io');
  // Code — a fenced block (pre>code) and inline code
  expect(container.querySelector('pre code')).toBeTruthy();
  expect(container.querySelector('pre code').textContent).toContain('const x = 1;');

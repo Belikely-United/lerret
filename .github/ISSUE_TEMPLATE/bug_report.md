@@ -26,7 +26,7 @@ labels: ["bug", "triage"]
 ## Environment
 
 - `@lerret/cli` version (run `npx @lerret/cli --version` or check `package.json`):
-- Mode (CLI / hosted studio at `app.lerret.belikely.com` / self-host):
+- Mode (CLI / hosted studio at `app.lerret.io` / self-host):
 - Operating system + version:
 - Browser + version (if applicable):
 - Node.js version (`node --version`):

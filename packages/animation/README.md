@@ -1,6 +1,6 @@
 # @lerret/animation
 
-Animated-export engine for [Lerret](https://lerret.belikely.com) — frame capture plus WebP / GIF / APNG / MP4 encoders behind a single `AnimationEncoder` interface.
+Animated-export engine for [Lerret](https://lerret.io) — frame capture plus WebP / GIF / APNG / MP4 encoders behind a single `AnimationEncoder` interface.
 
 This package is the home for every byte of Lerret's animation code. The other Lerret packages (`@lerret/studio`, `@lerret/cli`) reach this code **only** via dynamic import (`await import('@lerret/animation')`) — never statically. That boundary keeps the studio's main chunk free of encoder code, lets you remove the dependency cleanly in one PR if you ever need to slim down the install, and gives animation its own test/version/release lane.
 

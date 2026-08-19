@@ -117,16 +117,16 @@ describe('ollamaOriginsCommand', () => {
     });
 
     it('falls back to the hosted studio origin (app subdomain) when no page origin exists', () => {
-        // The hosted studio is app.lerret.belikely.com, NOT the landing page
-        // lerret.belikely.com — the fallback must name the app subdomain.
-        expect(HOSTED_STUDIO_ORIGIN).toBe('https://app.lerret.belikely.com');
+        // The hosted studio is app.lerret.io, NOT the landing page
+        // lerret.io — the fallback must name the app subdomain.
+        expect(HOSTED_STUDIO_ORIGIN).toBe('https://app.lerret.io');
 
         const original = Object.getOwnPropertyDescriptor(window, 'location');
         Object.defineProperty(window, 'location', { configurable: true, value: { origin: '' } });
         try {
-            expect(studioOrigin()).toBe('https://app.lerret.belikely.com');
+            expect(studioOrigin()).toBe('https://app.lerret.io');
             expect(ollamaOriginsCommand()).toBe(
-                'OLLAMA_ORIGINS="https://app.lerret.belikely.com" ollama serve',
+                'OLLAMA_ORIGINS="https://app.lerret.io" ollama serve',
             );
         } finally {
             if (original) Object.defineProperty(window, 'location', original);

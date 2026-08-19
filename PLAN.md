@@ -10,7 +10,7 @@ so the canvas is a view of real code rather than a separate design artifact.
 Ways to use it:
 
 - **CLI** — `npx @lerret/cli` in a project.
-- **Hosted studio** — app.lerret.belikely.com.
+- **Hosted studio** — app.lerret.io.
 - **Self-host** — run it yourself.
 - **Claude Code plugin** — published through the
   [Belikely-United/marketplace](https://github.com/Belikely-United/marketplace):
@@ -20,9 +20,9 @@ Sites:
 
 | Purpose | URL |
 | --- | --- |
-| Docs | docs.lerret.belikely.com |
-| Studio | app.lerret.belikely.com |
-| Home | lerret.belikely.com |
+| Docs | docs.lerret.io |
+| Studio | app.lerret.io |
+| Home | lerret.io |
 
 Latest public release noted: `@lerret/core` 0.1.3.
 

@@ -7,7 +7,7 @@ export const meta = {
     metric: { type: 'string', default: '100×' },
     headline: { type: 'string', default: 'Faster than reaching for Figma.', required: true },
     description: { type: 'string', default: 'Author every social card, OG image, and release graphic in plain React. No vendor file. No round-trip.' },
-    detail: { type: 'string', default: 'lerret.belikely.com' },
+    detail: { type: 'string', default: 'lerret.io' },
   },
 };
 
@@ -16,7 +16,7 @@ export default function PhGallery({
   metric = '100×',
   headline = 'Faster than reaching for Figma.',
   description = 'Author every social card, OG image, and release graphic in plain React. No vendor file. No round-trip.',
-  detail = 'lerret.belikely.com',
+  detail = 'lerret.io',
 }) {
   return (
     <div style={{

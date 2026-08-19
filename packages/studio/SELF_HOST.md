@@ -2,7 +2,7 @@
 
 The Lerret studio is a fully client-side static SPA — no backend, no database,
 no account. Your project files never leave your machine (NFR6). You can serve
-the same studio that runs at `lerret.belikely.com` from any static web server
+the same studio that runs at `lerret.io` from any static web server
 or CDN you control.
 
 ---

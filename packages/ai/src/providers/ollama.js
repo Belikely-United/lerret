@@ -8,7 +8,7 @@
 //   { "model": "...", "done": true, "total_duration": ... }
 //
 // Probe calls GET /api/tags — the lightweight model-list endpoint. On a
-// hosted page (lerret.belikely.com) the browser blocks the call unless the
+// hosted page (lerret.io) the browser blocks the call unless the
 // user has set OLLAMA_ORIGINS to include the studio's origin. The probe
 // surfaces `{ok: false, reason: 'cors'}` in that case; Story 8.10 owns the
 // "summon the OLLAMA_ORIGINS guide" branch.

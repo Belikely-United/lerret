@@ -34,7 +34,7 @@ describe('OpenRouterProvider', () => {
         const [url, init] = fetchSpy.mock.calls[0];
         expect(url).toBe('https://openrouter.ai/api/v1/chat/completions');
         expect(init.headers.Authorization).toBe('Bearer or-test');
-        expect(init.headers['HTTP-Referer']).toBe('https://lerret.belikely.com');
+        expect(init.headers['HTTP-Referer']).toBe('https://lerret.io');
         expect(init.headers['X-Title']).toBe('Lerret');
     });
 
@@ -220,7 +220,7 @@ describe('OpenRouterProvider', () => {
             const [url, init] = fetchSpy.mock.calls[0];
             expect(url).toBe('https://openrouter.ai/api/v1/chat/completions');
             expect(init.headers.Authorization).toBe('Bearer or-test');
-            expect(init.headers['HTTP-Referer']).toBe('https://lerret.belikely.com');
+            expect(init.headers['HTTP-Referer']).toBe('https://lerret.io');
             expect(init.headers['X-Title']).toBe('Lerret');
             const body = JSON.parse(init.body);
             expect(body.stream).toBe(false);
