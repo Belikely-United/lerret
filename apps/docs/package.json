@@ -2,7 +2,7 @@
   "name": "@lerret/docs",
   "version": "0.0.0",
   "private": true,
-  "description": "Lerret documentation site — Nextra (Next.js App Router + MDX). Deploys to docs.lerret.belikely.com.",
+  "description": "Lerret documentation site — Nextra (Next.js App Router + MDX). Deploys to docs.lerret.io.",
   "type": "module",
   "scripts": {
     "dev": "next dev",

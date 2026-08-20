@@ -3,7 +3,7 @@
 // Endpoint: POST https://openrouter.ai/api/v1/chat/completions
 // Auth: Authorization: Bearer <apiKey>
 // Required headers (OpenRouter best practice for app attribution):
-//   HTTP-Referer: https://lerret.belikely.com
+//   HTTP-Referer: https://lerret.io
 //   X-Title: Lerret
 //
 // OpenRouter happens to be OpenAI-compatible at the wire level; we still
@@ -40,7 +40,7 @@ import { assertVendorOrigin } from './url-guard.js';
 
 const DEFAULT_BASE_URL = 'https://openrouter.ai';
 const DEFAULT_MODEL = 'openai/gpt-4o';
-const APP_REFERER = 'https://lerret.belikely.com';
+const APP_REFERER = 'https://lerret.io';
 const APP_TITLE = 'Lerret';
 
 /**

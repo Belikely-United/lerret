@@ -272,12 +272,12 @@ function WalkthroughDoneCard({ stepIdx, total, onBack, onClose, prefersReducedMo
  Read the docs at{' '}
  <a
  className="lm-focusable"
- href="https://docs.lerret.belikely.com"
+ href="https://docs.lerret.io"
  target="_blank"
  rel="noopener noreferrer"
  style={{ color: 'var(--lm-accent, #B85B33)', fontWeight: 600, textDecoration: 'none' }}
  >
- docs.lerret.belikely.com
+ docs.lerret.io
  </a>
  </div>
  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

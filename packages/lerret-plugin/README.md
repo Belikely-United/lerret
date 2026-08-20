@@ -1,6 +1,6 @@
 # @lerret/plugin — Lerret as a Claude Code plugin
 
-One command — **`/lerret`** — turns a plain request into a polished [Lerret](https://lerret.belikely.com)
+One command — **`/lerret`** — turns a plain request into a polished [Lerret](https://lerret.io)
 design asset, from inside Claude Code. **Your own Claude is the design brain**: the plugin wraps the
 published `@lerret/cli`, so there's **no duplicated logic and no AI keys/providers**.
 

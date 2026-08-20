@@ -34,20 +34,20 @@ import * as ReactDOM from 'react-dom';
 /**
  * Canonical hosted studio origin — used ONLY as the fallback when the page has
  * no readable origin (SSR / a test without a window). The hosted studio is
- * served from `app.lerret.belikely.com` (`lerret.belikely.com` is the landing
+ * served from `app.lerret.io` (`lerret.io` is the landing
  * page); for `OLLAMA_ORIGINS` to actually open the CORS gate it must equal the
  * studio page's real origin, so the live value below is preferred.
  *
  * @type {string}
  */
-export const HOSTED_STUDIO_ORIGIN = 'https://app.lerret.belikely.com';
+export const HOSTED_STUDIO_ORIGIN = 'https://app.lerret.io';
 
 /**
  * The studio page's own origin — the value Ollama's CORS allowlist must hold.
  *
  * Derived from the LIVE page (`window.location.origin`) so the guide always
  * shows the correct value regardless of which domain serves the studio:
- * `https://app.lerret.belikely.com` in hosted mode, `http://localhost:*` in
+ * `https://app.lerret.io` in hosted mode, `http://localhost:*` in
  * dev, or any self-hosted build. A hard-coded guess that disagrees with the
  * served domain would leave Ollama rejecting the studio's requests, which is
  * the whole point of the variable. Falls back to {@link HOSTED_STUDIO_ORIGIN}

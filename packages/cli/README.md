@@ -45,12 +45,12 @@ One do-anything `/lerret` command: it authors the `.jsx`, renders to verify, pre
 
 ## Documentation
 
-Full docs: **https://docs.lerret.belikely.com**
+Full docs: **https://docs.lerret.io**
 
-- [Getting Started](https://docs.lerret.belikely.com/getting-started/)
-- [Concepts — the folder-canvas model](https://docs.lerret.belikely.com/concepts/)
-- [Authoring Assets](https://docs.lerret.belikely.com/authoring/)
-- [CLI Reference](https://docs.lerret.belikely.com/cli/)
+- [Getting Started](https://docs.lerret.io/getting-started/)
+- [Concepts — the folder-canvas model](https://docs.lerret.io/concepts/)
+- [Authoring Assets](https://docs.lerret.io/authoring/)
+- [CLI Reference](https://docs.lerret.io/cli/)
 
 ## Source & community
 

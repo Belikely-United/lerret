@@ -85,10 +85,10 @@ Point Lerret at a local Ollama and no data leaves your machine. In **CLI mode** 
 In the **hosted studio** there's one wrinkle: the page is served over HTTPS, but Ollama listens on `http://localhost`, which browsers block by default. Lerret detects this and walks you through the fix — set `OLLAMA_ORIGINS` to the studio's origin so Ollama accepts requests from the hosted page:
 
 ```
-OLLAMA_ORIGINS="https://app.lerret.belikely.com" ollama serve
+OLLAMA_ORIGINS="https://app.lerret.io" ollama serve
 ```
 
-The origin must match the hosted studio you're on (`https://app.lerret.belikely.com`); Lerret's in-app guide shows the exact command to copy.
+The origin must match the hosted studio you're on (`https://app.lerret.io`); Lerret's in-app guide shows the exact command to copy.
 
 One honest note on quality: **local models produce lower-fidelity `.jsx` than frontier cloud models.** Choose with that in mind — and switch providers any time.
 

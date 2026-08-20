@@ -6,7 +6,7 @@
 
 export const dynamic = 'force-static';
 
-const BASE = 'https://docs.lerret.belikely.com';
+const BASE = 'https://docs.lerret.io';
 
 const ROUTES = [
   '',

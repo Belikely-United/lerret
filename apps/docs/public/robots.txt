@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://docs.lerret.belikely.com/sitemap.xml
+Sitemap: https://docs.lerret.io/sitemap.xml

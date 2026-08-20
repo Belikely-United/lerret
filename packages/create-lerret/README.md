@@ -89,7 +89,7 @@ The AI-tool files sit outside `.lerret/` and are rendered at scaffold time rathe
 ## Source & docs
 
 - Source: [github.com/belikely-united/lerret](https://github.com/belikely-united/lerret) (`packages/create-lerret/`)
-- Documentation: [docs.lerret.belikely.com](https://docs.lerret.belikely.com)
+- Documentation: [docs.lerret.io](https://docs.lerret.io)
 
 ## License
 

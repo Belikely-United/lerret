@@ -5,12 +5,12 @@ export const meta = {
   label: 'OG image (homepage)',
   tags: ['site', 'og-image', 'social-card'],
   propsSchema: {
-    siteName: { type: 'string', default: 'lerret.belikely.com', description: 'Site name.', required: true },
+    siteName: { type: 'string', default: 'lerret.io', description: 'Site name.', required: true },
     tagline: { type: 'string', default: 'Designs are just files.', description: 'Tagline.' },
   },
 };
 
-export default function OGImage({ siteName = 'lerret.belikely.com', tagline = 'Designs are just files.' }) {
+export default function OGImage({ siteName = 'lerret.io', tagline = 'Designs are just files.' }) {
   return (
     <div
       style={{

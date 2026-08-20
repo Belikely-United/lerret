@@ -12,7 +12,7 @@ component artboards on the canvas.
 
 ## Editing model
 
-Markdown is edited [at the source](https://lerret.belikely.com) — your editor,
+Markdown is edited [at the source](https://lerret.io) — your editor,
 an AI loop, or the in-studio Markdown editor — and the canvas re-renders.
 
 > A Lerret project is just a folder of files. The canvas is a *view*.
